@@ -10,7 +10,6 @@
 
     :root {
       --blue: #003CFF;
-      --blue-hover: #0030d4;
       --blue-pale: #e8edff;
       --text: #111;
       --muted: #777;
@@ -18,7 +17,6 @@
       --bg: #f4f4f6;
       --white: #fff;
       --red: #c0392b;
-      --green: #1a7a3c;
       --radius: 14px;
       --shadow: 0 2px 10px rgba(0,0,0,0.07);
     }
@@ -34,19 +32,15 @@
 
     /* ── Header ── */
     .hdr {
-      background: var(--blue);
-      color: #fff;
+      background: var(--blue); color: #fff;
       padding: 14px 18px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
     }
-    .hdr-title { font-size: 17px; font-weight: 700; letter-spacing: .3px; }
+    .hdr-title { font-size: 17px; font-weight: 700; }
     .hdr-sub   { font-size: 10px; opacity: .75; text-transform: uppercase; letter-spacing: .8px; margin-top: 1px; }
-    .hdr-btn   { background: rgba(255,255,255,.18); border: none; color: #fff; font-size: 13px; font-weight: 600; padding: 7px 13px; border-radius: 8px; cursor: pointer; }
+    .hdr-btn   { background: rgba(255,255,255,.18); border: none; color: #fff; font-size: 13px; font-weight: 600; padding: 7px 13px; border-radius: 8px; cursor: pointer; white-space: nowrap; }
+    .hdr-btn-ghost { background: none; border: none; color: #fff; font-size: 13px; font-weight: 600; padding: 7px 4px; border-radius: 8px; cursor: pointer; }
 
     /* ── Screens ── */
     .screen { padding: 20px; padding-bottom: 110px; }
@@ -58,22 +52,15 @@
     .login-prompt { font-size: 15px; font-weight: 600; text-align: center; margin-bottom: 18px; }
     .user-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .user-card {
-      background: var(--white);
-      border: 2px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px 12px;
-      text-align: center;
-      cursor: pointer;
+      background: #fff; border: 2px solid var(--border); border-radius: var(--radius);
+      padding: 22px 12px; text-align: center; cursor: pointer;
       transition: border-color .15s, background .15s, transform .1s;
-      font-size: 17px;
-      font-weight: 600;
+      font-size: 17px; font-weight: 600;
     }
     .user-card:active { transform: scale(.95); border-color: var(--blue); background: var(--blue-pale); }
     .user-initial {
-      width: 50px; height: 50px;
-      border-radius: 50%;
-      border: 2px solid var(--blue);
-      color: var(--blue);
+      width: 50px; height: 50px; border-radius: 50%;
+      border: 2px solid var(--blue); color: var(--blue);
       font-size: 22px; font-weight: 700;
       display: flex; align-items: center; justify-content: center;
       margin: 0 auto 10px;
@@ -81,105 +68,110 @@
 
     /* ── Buttons ── */
     .btn {
-      display: block; width: 100%;
-      padding: 15px; border-radius: var(--radius);
-      font-size: 16px; font-weight: 600;
-      cursor: pointer; border: none; text-align: center;
+      display: block; width: 100%; padding: 15px; border-radius: var(--radius);
+      font-size: 16px; font-weight: 600; cursor: pointer; border: none; text-align: center;
       transition: transform .1s, opacity .1s;
     }
     .btn:active { transform: scale(.98); opacity: .9; }
     .btn-primary { background: var(--blue); color: #fff; }
     .btn-outline { background: #fff; color: var(--blue); border: 2px solid var(--blue); }
     .btn-ghost   { background: #fff; color: var(--muted); border: 2px solid var(--border); }
-    .btn-danger  { background: #fdf0f0; color: var(--red); border: 2px solid #f5c6c2; }
     .mt-10 { margin-top: 10px; }
     .mt-14 { margin-top: 14px; }
-    .mt-18 { margin-top: 18px; }
 
     /* ── Cards ── */
-    .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 14px; }
+    .card { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 14px; }
 
     /* ── Forms ── */
     .form-lbl { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 6px; }
-    .form-inp  {
-      width: 100%; padding: 13px 14px;
-      border: 2px solid var(--border); border-radius: 10px;
-      font-size: 16px; outline: none; background: #fff;
-      transition: border-color .15s;
-    }
+    .form-inp  { width: 100%; padding: 13px 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 16px; outline: none; background: #fff; transition: border-color .15s; }
     .form-inp:focus { border-color: var(--blue); }
     .form-grp { margin-bottom: 15px; }
 
-    /* ── Accordion sections ── */
-    .sec-hdr {
+    /* ── Quoting overview section cards ── */
+    .sec-nav {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 17px 18px; cursor: pointer; user-select: none;
+      padding: 18px; cursor: pointer; background: #fff;
+      border-radius: var(--radius); box-shadow: var(--shadow);
+      margin-bottom: 12px; transition: background .1s, transform .1s;
     }
-    .sec-title { font-size: 16px; font-weight: 700; }
-    .sec-meta  { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .sec-badge {
-      background: var(--blue); color: #fff;
-      border-radius: 20px; padding: 2px 10px;
-      font-size: 12px; font-weight: 700;
-    }
-    .sec-chevron { font-size: 11px; color: var(--muted); transition: transform .2s; margin-left: 8px; }
-    .sec-chevron.open { transform: rotate(180deg); }
-    .sec-body { padding: 0 18px 18px; }
+    .sec-nav:active { background: var(--blue-pale); transform: scale(.98); }
+    .sec-nav-title { font-size: 17px; font-weight: 700; }
+    .sec-nav-meta  { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .sec-nav-right { display: flex; align-items: center; gap: 10px; }
+    .sec-badge { background: var(--blue); color: #fff; border-radius: 20px; padding: 3px 11px; font-size: 12px; font-weight: 700; }
+    .sec-arrow { font-size: 18px; color: var(--muted); }
 
-    /* ── Window buttons ── */
-    .win-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-    .win-btn {
+    /* ── Full-screen section view ── */
+    .sec-screen { padding: 16px; padding-bottom: 90px; }
+
+    /* ── Window buttons (full-screen, large) ── */
+    .win-grid-full { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .win-btn-full {
       background: #fff; border: 2px solid var(--border);
-      border-radius: 10px; padding: 15px 10px;
+      border-radius: 14px; padding: 24px 14px;
       cursor: pointer; text-align: center;
       transition: border-color .15s, background .15s, transform .1s;
       position: relative;
     }
-    .win-btn:active { transform: scale(.94); border-color: var(--blue); background: var(--blue-pale); }
-    .win-btn-lbl   { font-size: 13px; font-weight: 700; display: block; line-height: 1.3; }
-    .win-btn-price { font-size: 12px; color: var(--muted); display: block; margin-top: 3px; }
-    .win-btn-badge {
-      position: absolute; top: -8px; right: -8px;
-      background: var(--blue); color: #fff;
-      border-radius: 50%; width: 22px; height: 22px;
+    .win-btn-full:active { transform: scale(.93); border-color: var(--blue); background: var(--blue-pale); }
+    .win-btn-full-lbl   { font-size: 16px; font-weight: 700; display: block; line-height: 1.3; }
+    .win-btn-full-price { font-size: 14px; color: var(--muted); display: block; margin-top: 5px; }
+    .win-btn-full-badge {
+      position: absolute; top: -9px; right: -9px;
+      background: var(--blue); color: #fff; border-radius: 50%;
+      width: 26px; height: 26px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700;
+      font-size: 13px; font-weight: 700;
     }
 
     /* ── Window list ── */
-    .win-list { background: var(--bg); border-radius: 10px; overflow: hidden; }
+    .win-list-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-bottom: 8px; }
+    .win-list { background: var(--bg); border-radius: 12px; overflow: hidden; }
     .win-item {
       display: flex; align-items: center;
-      padding: 10px 13px; border-bottom: 1px solid var(--border);
+      padding: 12px 14px; border-bottom: 1px solid var(--border);
       cursor: pointer; transition: background .1s;
     }
     .win-item:last-child { border-bottom: none; }
     .win-item:active { background: var(--blue-pale); }
     .win-item-info { flex: 1; }
-    .win-item-type  { font-size: 13px; font-weight: 600; }
-    .win-item-addon { font-size: 11px; color: var(--blue); margin-top: 2px; }
+    .win-item-type  { font-size: 14px; font-weight: 600; }
+    .win-item-addon { font-size: 12px; color: var(--blue); margin-top: 3px; }
     .win-item-addon.none { color: var(--muted); }
-    .win-item-price { font-size: 13px; font-weight: 700; color: var(--blue); margin-right: 10px; }
-    .win-item-del   { background: none; border: none; color: var(--muted); font-size: 17px; cursor: pointer; padding: 4px 2px; line-height: 1; }
+    .win-item-price { font-size: 14px; font-weight: 700; color: var(--blue); margin-right: 12px; }
+    .win-item-del   { background: none; border: none; color: var(--muted); font-size: 19px; cursor: pointer; padding: 4px; line-height: 1; }
 
-    /* ── Power wash ── */
-    .pw-row {
-      display: flex; align-items: center; gap: 10px;
-      padding: 13px 0; border-bottom: 1px solid var(--border);
-    }
+    /* ── Power wash rows ── */
+    .pw-card { background: #fff; border-radius: 12px; padding: 4px 0; margin-bottom: 14px; box-shadow: var(--shadow); overflow: hidden; }
+    .pw-row  { display: flex; align-items: center; gap: 12px; padding: 15px 16px; border-bottom: 1px solid var(--border); }
     .pw-row:last-child { border-bottom: none; }
-    .pw-lbl  { font-size: 14px; font-weight: 600; }
-    .pw-rate { font-size: 11px; color: var(--muted); margin-top: 1px; }
-    .pw-inp  {
-      width: 88px; padding: 9px 11px;
-      border: 2px solid var(--border); border-radius: 8px;
-      font-size: 15px; text-align: right; outline: none;
-      transition: border-color .15s;
-    }
+    .pw-lbl  { font-size: 15px; font-weight: 600; }
+    .pw-rate { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .pw-inp  { width: 96px; padding: 10px 12px; border: 2px solid var(--border); border-radius: 9px; font-size: 16px; text-align: right; outline: none; transition: border-color .15s; }
     .pw-inp:focus { border-color: var(--blue); }
-    .pw-total { width: 62px; text-align: right; font-size: 13px; font-weight: 700; color: var(--blue); }
+    .pw-total { width: 66px; text-align: right; font-size: 14px; font-weight: 700; color: var(--blue); }
 
-    /* ── Running total bar ── */
+    /* ── Section bottom bar (Done / subtotal) ── */
+    .sec-bar {
+      position: fixed; bottom: 0;
+      left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 430px;
+      background: #fff; border-top: 1px solid var(--border);
+      padding: 12px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 90; box-shadow: 0 -4px 20px rgba(0,0,0,0.07);
+    }
+    .sec-bar-lbl  { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+    .sec-bar-amt  { font-size: 22px; font-weight: 800; color: var(--blue); }
+    .done-btn {
+      background: var(--blue); color: #fff; border: none;
+      border-radius: 10px; padding: 13px 28px;
+      font-size: 16px; font-weight: 700; cursor: pointer;
+    }
+    .done-btn:active { opacity: .85; }
+
+    /* ── Quoting overview total bar ── */
     .total-bar {
       position: fixed; bottom: 0;
       left: 50%; transform: translateX(-50%);
@@ -187,8 +179,7 @@
       background: #fff; border-top: 1px solid var(--border);
       padding: 11px 18px;
       display: flex; align-items: center; justify-content: space-between;
-      z-index: 90;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.07);
+      z-index: 90; box-shadow: 0 -4px 20px rgba(0,0,0,0.07);
     }
     .total-lbl    { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
     .total-amount { font-size: 24px; font-weight: 800; color: var(--blue); }
@@ -196,47 +187,46 @@
       background: var(--blue); color: #fff; border: none;
       border-radius: 10px; padding: 13px 22px;
       font-size: 15px; font-weight: 700; cursor: pointer;
-      transition: transform .1s;
     }
-    .complete-btn:active { transform: scale(.97); }
+    .complete-btn:active { opacity: .85; }
 
-    /* ── Addon popup ── */
+    /* ── Addon popup (BIGGER) ── */
     .addon-popup {
       position: fixed;
-      bottom: -130px;
+      bottom: -200px;
       left: 50%; transform: translateX(-50%);
-      width: calc(100% - 28px); max-width: 402px;
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 -2px 30px rgba(0,0,0,.14);
-      padding: 15px 15px 18px;
+      width: calc(100% - 20px); max-width: 410px;
+      background: #fff; border-radius: 22px;
+      box-shadow: 0 -4px 40px rgba(0,0,0,.18);
+      padding: 20px 16px 24px;
       z-index: 200;
-      transition: bottom .22s cubic-bezier(.34,1.56,.64,1);
+      transition: bottom .25s cubic-bezier(.34,1.56,.64,1);
     }
-    .addon-popup.show { bottom: 84px; }
-    .addon-popup-lbl { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 10px; }
-    .addon-btns { display: flex; gap: 8px; }
+    .addon-popup.show { bottom: 86px; }
+    .addon-popup-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .addon-popup-sub   { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+    .addon-btns { display: flex; gap: 10px; }
     .addon-btn {
       flex: 1; background: var(--blue-pale); color: var(--blue);
-      border: 2px solid var(--blue); border-radius: 9px;
-      padding: 10px 5px; font-size: 13px; font-weight: 700;
-      cursor: pointer; text-align: center; transition: all .1s;
-      line-height: 1.3;
+      border: 2px solid var(--blue); border-radius: 12px;
+      padding: 16px 6px; font-size: 15px; font-weight: 700;
+      cursor: pointer; text-align: center;
+      transition: background .1s, color .1s; line-height: 1.3;
     }
     .addon-btn:active { background: var(--blue); color: #fff; }
     .addon-btn.skip   { background: #fff; color: var(--muted); border-color: var(--border); }
-    .addon-sub { font-size: 10px; font-weight: 500; display: block; margin-top: 2px; }
+    .addon-sub { font-size: 12px; font-weight: 500; display: block; margin-top: 4px; }
 
-    /* ── Summary / price range ── */
+    /* ── Summary ── */
     .price-card {
       background: var(--blue); color: #fff;
       border-radius: var(--radius); padding: 24px 20px;
       text-align: center; margin-bottom: 16px;
     }
-    .price-card-lbl    { font-size: 11px; opacity: .8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-    .price-card-range  { font-size: 34px; font-weight: 900; letter-spacing: -.5px; }
-    .price-card-calc   { font-size: 14px; opacity: .85; margin-top: 6px; }
-    .price-card-note   { font-size: 11px; opacity: .65; margin-top: 3px; }
+    .price-card-lbl   { font-size: 11px; opacity: .8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .price-card-range { font-size: 34px; font-weight: 900; letter-spacing: -.5px; }
+    .price-card-calc  { font-size: 14px; opacity: .85; margin-top: 6px; }
+    .price-card-note  { font-size: 11px; opacity: .65; margin-top: 3px; }
 
     .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
     .stat-card { background: #fff; border-radius: 10px; padding: 14px; text-align: center; box-shadow: var(--shadow); }
@@ -245,50 +235,51 @@
 
     .chart-wrap { position: relative; height: 210px; margin-bottom: 4px; }
 
-    .sum-lbl   { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-bottom: 10px; }
-    .sum-row   { display: flex; justify-content: space-between; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+    .sum-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-bottom: 10px; }
+    .sum-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
     .sum-row:last-child { border-bottom: none; }
     .sum-row-lbl { flex: 1; }
     .sum-row-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
     .sum-row-amt { font-weight: 700; color: var(--blue); }
     .sum-total-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; }
 
-    .warn-banner {
-      background: #fff8e1; border: 1.5px solid #f0c040;
-      border-radius: 10px; padding: 12px 14px;
-      font-size: 13px; color: #7a5a00; margin-bottom: 14px;
-      line-height: 1.4;
-    }
+    .warn-banner { background: #fff8e1; border: 1.5px solid #f0c040; border-radius: 10px; padding: 12px 14px; font-size: 13px; color: #7a5a00; margin-bottom: 14px; line-height: 1.4; }
 
     /* ── History ── */
-    .hist-card {
-      background: #fff; border-radius: var(--radius); padding: 15px;
-      margin-bottom: 12px; box-shadow: var(--shadow); cursor: pointer;
-    }
+    .hist-card { background: #fff; border-radius: var(--radius); padding: 15px; margin-bottom: 12px; box-shadow: var(--shadow); cursor: pointer; }
     .hist-top  { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
     .hist-name { font-size: 16px; font-weight: 700; }
     .hist-amt  { font-size: 18px; font-weight: 800; color: var(--blue); }
     .hist-meta { font-size: 12px; color: var(--muted); }
     .hist-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 9px; }
-    .hist-badge {
-      background: var(--blue-pale); color: var(--blue);
-      border-radius: 7px; padding: 3px 10px;
-      font-size: 11px; font-weight: 700;
-    }
-    .del-btn {
-      background: #fdf0f0; color: var(--red);
-      border: 1.5px solid #f5c6c2; border-radius: 7px;
-      padding: 5px 12px; font-size: 12px; font-weight: 600;
-      cursor: pointer;
-    }
+    .hist-badge { background: var(--blue-pale); color: var(--blue); border-radius: 7px; padding: 3px 10px; font-size: 11px; font-weight: 700; }
+    .del-btn { background: #fdf0f0; color: var(--red); border: 1.5px solid #f5c6c2; border-radius: 7px; padding: 5px 12px; font-size: 12px; font-weight: 600; cursor: pointer; }
 
     /* ── Modal sheet ── */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 500; display: flex; align-items: flex-end; }
-    .modal-sheet   {
-      background: #fff; border-radius: 20px 20px 0 0;
-      padding: 24px 20px 44px; width: 100%; max-width: 430px; margin: 0 auto;
-    }
+    .modal-sheet   { background: #fff; border-radius: 20px 20px 0 0; padding: 24px 20px 44px; width: 100%; max-width: 430px; margin: 0 auto; }
     .modal-title   { font-size: 18px; font-weight: 700; margin-bottom: 18px; }
+
+    /* ── Settings ── */
+    .settings-section { margin-bottom: 24px; }
+    .settings-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .7px; color: var(--muted); margin-bottom: 10px; }
+    .settings-row {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #fff; padding: 13px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .settings-row:first-of-type { border-radius: 12px 12px 0 0; }
+    .settings-row:last-of-type  { border-radius: 0 0 12px 12px; border-bottom: none; }
+    .settings-row:only-of-type  { border-radius: 12px; border-bottom: none; }
+    .settings-row-lbl { font-size: 15px; font-weight: 500; }
+    .settings-inp {
+      width: 90px; text-align: right; padding: 8px 10px;
+      border: 2px solid var(--border); border-radius: 8px;
+      font-size: 16px; font-weight: 600; outline: none;
+      transition: border-color .15s;
+    }
+    .settings-inp:focus { border-color: var(--blue); }
+    .settings-prefix { font-size: 14px; color: var(--muted); margin-right: 4px; }
 
     /* ── Toast ── */
     .toast {
@@ -298,21 +289,16 @@
       padding: 9px 20px; border-radius: 20px;
       font-size: 13px; font-weight: 500; z-index: 400;
       opacity: 0; pointer-events: none;
-      transition: opacity .18s, transform .18s;
-      white-space: nowrap;
+      transition: opacity .18s, transform .18s; white-space: nowrap;
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* ── Empty state ── */
+    /* ── Misc ── */
     .empty { text-align: center; padding: 56px 20px; color: var(--muted); }
     .empty-icon { width: 54px; height: 54px; border: 2px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
     .empty-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
-
-    /* ── Dashboard header row ── */
-    .dash-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 5px; }
-    .dash-name { font-size: 22px; font-weight: 800; }
+    .dash-name { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
     .dash-sub  { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
-
     .section-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-bottom: 11px; margin-top: 22px; }
     hr.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
   </style>
@@ -321,13 +307,14 @@
 
 <div id="app"></div>
 
-<!-- Addon popup — lives outside #app so re-renders don't destroy it -->
+<!-- Addon popup lives outside #app so re-renders don't destroy it -->
 <div id="addon-popup" class="addon-popup">
-  <div class="addon-popup-lbl" id="addon-popup-lbl">Add upgrade to window</div>
+  <div class="addon-popup-title" id="addon-popup-title">Add upgrade</div>
+  <div class="addon-popup-sub" id="addon-popup-sub">Tap an option or it will dismiss automatically</div>
   <div class="addon-btns">
-    <button class="addon-btn" onclick="applyAddon('storm')">Storm<span class="addon-sub">+$3</span></button>
-    <button class="addon-btn" onclick="applyAddon('screen')">Screen<span class="addon-sub">+$2</span></button>
-    <button class="addon-btn" onclick="applyAddon('both')">Storm &amp; Screen<span class="addon-sub">+$4</span></button>
+    <button class="addon-btn" onclick="applyAddon('storm')">Storm<span class="addon-sub" id="addon-storm-price">+$3</span></button>
+    <button class="addon-btn" onclick="applyAddon('screen')">Screen<span class="addon-sub" id="addon-screen-price">+$2</span></button>
+    <button class="addon-btn" onclick="applyAddon('both')">Storm &amp; Screen<span class="addon-sub" id="addon-both-price">+$4</span></button>
     <button class="addon-btn skip" onclick="hideAddon()">Skip</button>
   </div>
 </div>
@@ -335,34 +322,39 @@
 <div id="toast" class="toast"></div>
 
 <script>
-// ─── Constants ─────────────────────────────────────────────────────────────
+// ─── Users ────────────────────────────────────────────────────────────────────
 const USERS = ['Seamus', 'George', 'Mikey', 'Jackson'];
 
-const WIN_TYPES = {
-  regular:  { label: 'Regular Window',       price: 7,    custom: false },
-  small:    { label: 'Small Window',          price: 6,    custom: false },
-  large:    { label: 'Large / Complicated',   price: 9,    custom: false },
-  specialty:{ label: 'Specialty',             price: 0,    custom: true  },
+// ─── Pricing (loaded from localStorage, falls back to defaults) ───────────────
+const PRICING_DEFAULTS = {
+  regular: 7, small: 6, large: 9,
+  storm: 3, screen: 2, both: 4,
+  driveway: 0.20, patio: 0.25, brick: 0.30,
+  range: 40,
 };
 
-const ADDON_TYPES = {
-  storm:  { label: 'Storm Window',   price: 3 },
-  screen: { label: 'Screen',         price: 2 },
-  both:   { label: 'Storm & Screen', price: 4 },
-};
+function loadPricing() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('gpeq_pricing') || 'null');
+    return saved ? { ...PRICING_DEFAULTS, ...saved } : { ...PRICING_DEFAULTS };
+  } catch { return { ...PRICING_DEFAULTS }; }
+}
 
-const PW_TYPES = {
-  driveway: { label: 'Driveway',      rate: 0.20 },
-  patio:    { label: 'Patio',         rate: 0.25 },
-  brick:    { label: 'Brick/Masonry', rate: 0.30 },
-};
+function savePricing(p) {
+  localStorage.setItem('gpeq_pricing', JSON.stringify(p));
+}
 
-// ─── State ──────────────────────────────────────────────────────────────────
+// ─── Labels ───────────────────────────────────────────────────────────────────
+const WIN_LABELS  = { regular: 'Regular Window', small: 'Small Window', large: 'Large / Complicated', specialty: 'Specialty' };
+const ADDON_LABELS = { storm: 'Storm Window', screen: 'Screen', both: 'Storm & Screen' };
+const PW_LABELS   = { driveway: 'Driveway', patio: 'Patio', brick: 'Brick/Masonry' };
+
+// ─── State ────────────────────────────────────────────────────────────────────
 const state = {
   view: 'login',
   user: null,
   quote: null,
-  openSection: 'windows',
+  pricing: loadPricing(),
   historyList: JSON.parse(localStorage.getItem('gpeq_v1') || '[]'),
   addonTarget: null,
   addonTimer: null,
@@ -381,16 +373,19 @@ function newQuote() {
   };
 }
 
-// ─── Calculations ───────────────────────────────────────────────────────────
+// ─── Calculations ─────────────────────────────────────────────────────────────
 function winPrice(w) {
-  const base = w.type === 'specialty' ? (Number(w.customPrice) || 0) : WIN_TYPES[w.type].price;
-  return base + (w.addon ? ADDON_TYPES[w.addon].price : 0);
+  const p = state.pricing;
+  const base = w.type === 'specialty' ? (Number(w.customPrice) || 0) : p[w.type];
+  const addonCost = w.addon ? p[w.addon] : 0;
+  return base + addonCost;
 }
 
 function pwTotal(pw) {
-  return (Number(pw.driveway) || 0) * 0.20
-       + (Number(pw.patio)    || 0) * 0.25
-       + (Number(pw.brick)    || 0) * 0.30
+  const p = state.pricing;
+  return (Number(pw.driveway) || 0) * p.driveway
+       + (Number(pw.patio)    || 0) * p.patio
+       + (Number(pw.brick)    || 0) * p.brick
        + (Number(pw.specPrice)|| 0);
 }
 
@@ -404,17 +399,37 @@ function saveHistory() {
   localStorage.setItem('gpeq_v1', JSON.stringify(state.historyList));
 }
 
-// ─── Navigation ─────────────────────────────────────────────────────────────
+// ─── Navigation ───────────────────────────────────────────────────────────────
 function go(view) {
   state.view = view;
   render();
   window.scrollTo(0, 0);
 }
 
-// ─── Addon popup ─────────────────────────────────────────────────────────────
+// Re-render current view without scrolling to top (used after adding/removing items)
+function refreshCurrent() {
+  const scrollY = window.scrollY;
+  const map = {
+    quoting: renderQuoting,
+    'win-section': renderWinSection,
+    'pw-section': renderPWSection,
+    'gut-section': renderGutSection,
+  };
+  const fn = map[state.view];
+  if (!fn) return;
+  document.getElementById('app').innerHTML = fn();
+  window.scrollTo(0, scrollY);
+}
+
+// ─── Addon popup ──────────────────────────────────────────────────────────────
 function showAddon(windowId, label) {
+  const p = state.pricing;
   state.addonTarget = windowId;
-  document.getElementById('addon-popup-lbl').textContent = 'Add upgrade — ' + label;
+  document.getElementById('addon-popup-title').textContent = label;
+  document.getElementById('addon-popup-sub').textContent = 'Add upgrade — tap an option or it will dismiss';
+  document.getElementById('addon-storm-price').textContent  = '+$' + p.storm;
+  document.getElementById('addon-screen-price').textContent = '+$' + p.screen;
+  document.getElementById('addon-both-price').textContent   = '+$' + p.both;
   document.getElementById('addon-popup').classList.add('show');
   clearTimeout(state.addonTimer);
   state.addonTimer = setTimeout(hideAddon, 2000);
@@ -429,13 +444,13 @@ function hideAddon() {
 function applyAddon(type) {
   if (!state.addonTarget) return;
   const w = state.quote.windows.find(w => w.id === state.addonTarget);
-  if (w) { w.addon = type; }
+  if (w) w.addon = type;
   hideAddon();
-  refreshQuoting();
-  toast(ADDON_TYPES[type].label + ' added');
+  refreshCurrent();
+  toast(ADDON_LABELS[type] + ' added');
 }
 
-// ─── Toast ───────────────────────────────────────────────────────────────────
+// ─── Toast ────────────────────────────────────────────────────────────────────
 let toastTimer;
 function toast(msg) {
   const el = document.getElementById('toast');
@@ -445,31 +460,19 @@ function toast(msg) {
   toastTimer = setTimeout(() => el.classList.remove('show'), 1800);
 }
 
-// ─── Render ──────────────────────────────────────────────────────────────────
+// ─── Render ───────────────────────────────────────────────────────────────────
 function render() {
-  const app = document.getElementById('app');
   const views = {
-    login:         renderLogin,
-    dashboard:     renderDashboard,
-    'cust-info':   renderCustInfo,
-    quoting:       renderQuoting,
-    summary:       renderSummary,
-    history:       renderHistory,
+    login: renderLogin, dashboard: renderDashboard,
+    'cust-info': renderCustInfo, quoting: renderQuoting,
+    'win-section': renderWinSection, 'pw-section': renderPWSection, 'gut-section': renderGutSection,
+    summary: renderSummary, history: renderHistory, settings: renderSettings,
   };
-  app.innerHTML = (views[state.view] || renderLogin)();
-  if (state.view === 'summary') {
-    requestAnimationFrame(() => requestAnimationFrame(initCharts));
-  }
+  document.getElementById('app').innerHTML = (views[state.view] || renderLogin)();
+  if (state.view === 'summary') requestAnimationFrame(() => requestAnimationFrame(initCharts));
 }
 
-function refreshQuoting() {
-  if (state.view !== 'quoting') return;
-  const scrollY = window.scrollY;
-  document.getElementById('app').innerHTML = renderQuoting();
-  window.scrollTo(0, scrollY);
-}
-
-// ─── Login ───────────────────────────────────────────────────────────────────
+// ─── Login ────────────────────────────────────────────────────────────────────
 function renderLogin() {
   return `
     <div class="login-top">
@@ -489,13 +492,9 @@ function renderLogin() {
     </div>
   `;
 }
+function selectUser(name) { state.user = name; go('dashboard'); }
 
-function selectUser(name) {
-  state.user = name;
-  go('dashboard');
-}
-
-// ─── Dashboard ───────────────────────────────────────────────────────────────
+// ─── Dashboard ────────────────────────────────────────────────────────────────
 function renderDashboard() {
   const recent = state.historyList.filter(q => q.createdBy === state.user).slice(0, 3);
   return `
@@ -504,15 +503,16 @@ function renderDashboard() {
         <div class="hdr-title">GPE Quoting</div>
         <div class="hdr-sub">grossepointeexterior.com</div>
       </div>
-      <button class="hdr-btn" onclick="go('login')">Switch</button>
+      <div style="display:flex;gap:8px">
+        <button class="hdr-btn" onclick="go('settings')">Settings</button>
+        <button class="hdr-btn" onclick="go('login')">Switch</button>
+      </div>
     </div>
     <div class="screen">
-      <div class="dash-row"><div class="dash-name">Hello, ${state.user}</div></div>
+      <div class="dash-name">Hello, ${state.user}</div>
       <div class="dash-sub">Grosse Pointe Exterior — Field Quoting</div>
-
       <button class="btn btn-primary" onclick="startQuote()">Start New Quote</button>
       <button class="btn btn-outline mt-10" onclick="go('history')">Quote History</button>
-
       ${recent.length ? `
         <hr class="divider">
         <div class="section-lbl" style="margin-top:0">Your Recent Quotes</div>
@@ -521,11 +521,7 @@ function renderDashboard() {
     </div>
   `;
 }
-
-function startQuote() {
-  state.quote = newQuote();
-  go('cust-info');
-}
+function startQuote() { state.quote = newQuote(); go('cust-info'); }
 
 // ─── Customer Info ────────────────────────────────────────────────────────────
 function renderCustInfo() {
@@ -542,21 +538,17 @@ function renderCustInfo() {
       <div class="card" style="padding:18px">
         <div style="font-size:16px;font-weight:700;margin-bottom:3px">Customer Information</div>
         <div style="font-size:13px;color:var(--muted);margin-bottom:18px">Can be filled in later</div>
-
         <div class="form-grp">
           <label class="form-lbl">Customer Name</label>
-          <input class="form-inp" type="text" placeholder="Full name" value="${esc(c.name)}"
-            oninput="state.quote.customer.name=this.value">
+          <input class="form-inp" type="text" placeholder="Full name" value="${esc(c.name)}" oninput="state.quote.customer.name=this.value">
         </div>
         <div class="form-grp">
           <label class="form-lbl">Address</label>
-          <input class="form-inp" type="text" placeholder="Street address" value="${esc(c.address)}"
-            oninput="state.quote.customer.address=this.value">
+          <input class="form-inp" type="text" placeholder="Street address" value="${esc(c.address)}" oninput="state.quote.customer.address=this.value">
         </div>
         <div class="form-grp" style="margin-bottom:0">
           <label class="form-lbl">Phone Number</label>
-          <input class="form-inp" type="tel" placeholder="(555) 000-0000" value="${esc(c.phone)}"
-            oninput="state.quote.customer.phone=this.value">
+          <input class="form-inp" type="tel" placeholder="(555) 000-0000" value="${esc(c.phone)}" oninput="state.quote.customer.phone=this.value">
         </div>
       </div>
       <button class="btn btn-primary mt-14" onclick="go('quoting')">Continue to Quote</button>
@@ -565,11 +557,17 @@ function renderCustInfo() {
   `;
 }
 
-// ─── Quoting ─────────────────────────────────────────────────────────────────
+// ─── Quoting Overview ─────────────────────────────────────────────────────────
 function renderQuoting() {
   const q = state.quote;
-  const total = quoteTotal(q);
-  const cust = q.customer.name || 'New Quote';
+  const total  = quoteTotal(q);
+  const wCount = q.windows.length;
+  const wTotal = q.windows.reduce((s, w) => s + winPrice(w), 0);
+  const pwT    = pwTotal(q.pw);
+  const gutT   = Number(q.gutters.price) || 0;
+  const cust   = q.customer.name || 'New Quote';
+  const hasPW  = Object.values(q.pw).some(v => v !== '');
+
   return `
     <div class="hdr">
       <button class="hdr-btn" onclick="go('cust-info')">Back</button>
@@ -578,104 +576,155 @@ function renderQuoting() {
         <div class="hdr-sub">Building Quote</div>
       </div>
     </div>
-    <div style="padding-bottom:80px">
-      ${renderWinSection()}
-      ${renderPWSection()}
-      ${renderGutterSection()}
-      <div style="padding:0 18px 8px">
-        <div class="form-grp" style="margin-bottom:0">
-          <label class="form-lbl">Additional Notes</label>
-          <textarea class="form-inp" rows="3" placeholder="Observations, access notes, etc."
-            style="resize:none" oninput="state.quote.notes=this.value">${esc(q.notes)}</textarea>
+    <div style="padding:16px;padding-bottom:90px">
+
+      <div class="sec-nav" onclick="go('win-section')">
+        <div>
+          <div class="sec-nav-title">Exterior Windows</div>
+          <div class="sec-nav-meta">${wCount > 0 ? `${wCount} window${wCount !== 1 ? 's' : ''} — $${wTotal.toFixed(2)}` : 'Tap to add windows'}</div>
+        </div>
+        <div class="sec-nav-right">
+          ${wCount > 0 ? `<span class="sec-badge">${wCount}</span>` : ''}
+          <span class="sec-arrow">&#8250;</span>
         </div>
       </div>
+
+      <div class="sec-nav" onclick="go('pw-section')">
+        <div>
+          <div class="sec-nav-title">Power Washing</div>
+          <div class="sec-nav-meta">${hasPW ? 'Total: $' + pwT.toFixed(2) : 'Tap to enter square footage'}</div>
+        </div>
+        <div class="sec-nav-right">
+          ${hasPW ? `<span class="sec-badge">$${pwT.toFixed(0)}</span>` : ''}
+          <span class="sec-arrow">&#8250;</span>
+        </div>
+      </div>
+
+      <div class="sec-nav" onclick="go('gut-section')">
+        <div>
+          <div class="sec-nav-title">Gutters</div>
+          <div class="sec-nav-meta">${gutT > 0 ? 'Price: $' + gutT.toFixed(2) : 'Tap to enter price'}</div>
+        </div>
+        <div class="sec-nav-right">
+          ${gutT > 0 ? `<span class="sec-badge">$${gutT.toFixed(0)}</span>` : ''}
+          <span class="sec-arrow">&#8250;</span>
+        </div>
+      </div>
+
+      <div class="form-grp" style="margin-top:6px;margin-bottom:0">
+        <label class="form-lbl">Additional Notes</label>
+        <textarea class="form-inp" rows="3" placeholder="Observations, access notes, etc."
+          style="resize:none" oninput="state.quote.notes=this.value">${esc(q.notes)}</textarea>
+      </div>
+
     </div>
     <div class="total-bar">
       <div>
         <div class="total-lbl">Running Total</div>
-        <div class="total-amount" id="total-amt">$${total.toFixed(2)}</div>
+        <div class="total-amount">$${total.toFixed(2)}</div>
       </div>
       <button class="complete-btn" onclick="completeQuote()">Complete Quote</button>
     </div>
   `;
 }
 
-function toggleSec(name) {
-  state.openSection = state.openSection === name ? null : name;
-  refreshQuoting();
+function completeQuote() {
+  if (quoteTotal(state.quote) === 0) { toast('Add at least one item first'); return; }
+  state.quote.completedAt = new Date().toISOString();
+  go('summary');
 }
 
-// ── Windows section ──
+// ─── Full-Screen: Windows ─────────────────────────────────────────────────────
 function renderWinSection() {
-  const open = state.openSection === 'windows';
   const q = state.quote;
+  const p = state.pricing;
   const wTotal = q.windows.reduce((s, w) => s + winPrice(w), 0);
   const wCount = q.windows.length;
 
   return `
-    <div class="card">
-      <div class="sec-hdr" onclick="toggleSec('windows')">
-        <div>
-          <div class="sec-title">Exterior Windows</div>
-          <div class="sec-meta">${wCount > 0 ? `${wCount} window${wCount !== 1 ? 's' : ''} — $${wTotal.toFixed(2)}` : 'Tap to add windows'}</div>
-        </div>
-        <div style="display:flex;align-items:center">
-          ${wCount > 0 ? `<span class="sec-badge">${wCount}</span>` : ''}
-          <span class="sec-chevron ${open ? 'open' : ''}">&#9660;</span>
-        </div>
+    <div class="hdr">
+      <button class="hdr-btn" onclick="go('quoting')">Back</button>
+      <div style="text-align:right">
+        <div class="hdr-title">Exterior Windows</div>
+        <div class="hdr-sub">${wCount} window${wCount !== 1 ? 's' : ''} added</div>
       </div>
-      ${open ? `
-      <div class="sec-body">
-        <div class="win-grid">
-          ${['regular','small','large','specialty'].map(type => `
-            <button class="win-btn" onclick="${type === 'specialty' ? 'openSpecModal()' : `addWin('${type}')`}">
-              <span class="win-btn-lbl">${WIN_TYPES[type].label}</span>
-              <span class="win-btn-price">${WIN_TYPES[type].custom ? 'Custom' : '$' + WIN_TYPES[type].price + '.00'}</span>
-              ${countWin(type) > 0 ? `<span class="win-btn-badge">${countWin(type)}</span>` : ''}
-            </button>
+    </div>
+    <div class="sec-screen">
+
+      <div class="win-grid-full">
+        <button class="win-btn-full" onclick="addWin('regular')">
+          <span class="win-btn-full-lbl">Regular</span>
+          <span class="win-btn-full-price">$${p.regular.toFixed(2)}</span>
+          ${countWin('regular') > 0 ? `<span class="win-btn-full-badge">${countWin('regular')}</span>` : ''}
+        </button>
+        <button class="win-btn-full" onclick="addWin('small')">
+          <span class="win-btn-full-lbl">Small</span>
+          <span class="win-btn-full-price">$${p.small.toFixed(2)}</span>
+          ${countWin('small') > 0 ? `<span class="win-btn-full-badge">${countWin('small')}</span>` : ''}
+        </button>
+        <button class="win-btn-full" onclick="addWin('large')">
+          <span class="win-btn-full-lbl">Large / Complicated</span>
+          <span class="win-btn-full-price">$${p.large.toFixed(2)}</span>
+          ${countWin('large') > 0 ? `<span class="win-btn-full-badge">${countWin('large')}</span>` : ''}
+        </button>
+        <button class="win-btn-full" onclick="openSpecModal()">
+          <span class="win-btn-full-lbl">Specialty</span>
+          <span class="win-btn-full-price">Custom</span>
+          ${countWin('specialty') > 0 ? `<span class="win-btn-full-badge">${countWin('specialty')}</span>` : ''}
+        </button>
+      </div>
+
+      ${q.windows.length > 0 ? `
+        <div class="win-list-lbl">Added — ${wCount} window${wCount !== 1 ? 's' : ''}</div>
+        <div class="win-list">
+          ${q.windows.map((w, i) => `
+            <div class="win-item" onclick="editAddon('${w.id}')">
+              <div class="win-item-info">
+                <div class="win-item-type">${esc(w.label || WIN_LABELS[w.type])} #${i + 1}</div>
+                <div class="win-item-addon ${w.addon ? '' : 'none'}">
+                  ${w.addon ? '+ ' + ADDON_LABELS[w.addon] + ' (+$' + state.pricing[w.addon] + ')' : 'Tap to add upgrade'}
+                </div>
+              </div>
+              <div class="win-item-price">$${winPrice(w).toFixed(2)}</div>
+              <button class="win-item-del" onclick="event.stopPropagation();removeWin('${w.id}')">&#215;</button>
+            </div>
           `).join('')}
         </div>
-        ${q.windows.length > 0 ? `
-          <div class="win-list">
-            ${q.windows.map((w, i) => `
-              <div class="win-item" onclick="editAddon('${w.id}')">
-                <div class="win-item-info">
-                  <div class="win-item-type">${esc(w.label || WIN_TYPES[w.type].label)} #${i + 1}</div>
-                  <div class="win-item-addon ${w.addon ? '' : 'none'}">
-                    ${w.addon ? '+ ' + ADDON_TYPES[w.addon].label + ' (+$' + ADDON_TYPES[w.addon].price + ')' : 'Tap to add upgrade'}
-                  </div>
-                </div>
-                <div class="win-item-price">$${winPrice(w).toFixed(2)}</div>
-                <button class="win-item-del" onclick="event.stopPropagation();removeWin('${w.id}')">&#215;</button>
-              </div>
-            `).join('')}
-          </div>
-        ` : ''}
+      ` : `
+        <div style="text-align:center;padding:40px 20px;color:var(--muted)">
+          <div style="font-size:15px;font-weight:600;margin-bottom:6px">No windows added yet</div>
+          <div style="font-size:13px">Tap a window type above to start counting</div>
+        </div>
+      `}
+    </div>
+
+    <div class="sec-bar">
+      <div>
+        <div class="sec-bar-lbl">Window Subtotal</div>
+        <div class="sec-bar-amt">$${wTotal.toFixed(2)}</div>
       </div>
-      ` : ''}
+      <button class="done-btn" onclick="go('quoting')">Done</button>
     </div>
   `;
 }
 
-function countWin(type) {
-  return state.quote.windows.filter(w => w.type === type).length;
-}
+function countWin(type) { return state.quote.windows.filter(w => w.type === type).length; }
 
 function addWin(type) {
   const id = Date.now() + '_' + Math.random().toString(36).slice(2);
-  state.quote.windows.push({ id, type, label: WIN_TYPES[type].label, addon: null });
-  refreshQuoting();
-  showAddon(id, WIN_TYPES[type].label);
+  state.quote.windows.push({ id, type, label: WIN_LABELS[type], addon: null });
+  refreshCurrent();
+  showAddon(id, WIN_LABELS[type]);
 }
 
 function removeWin(id) {
   state.quote.windows = state.quote.windows.filter(w => w.id !== id);
-  refreshQuoting();
+  refreshCurrent();
 }
 
 function editAddon(id) {
   const w = state.quote.windows.find(w => w.id === id);
-  if (w) showAddon(id, w.label || WIN_TYPES[w.type].label);
+  if (w) showAddon(id, w.label || WIN_LABELS[w.type]);
 }
 
 function openSpecModal() {
@@ -687,7 +736,7 @@ function openSpecModal() {
       <div class="modal-title">Specialty Window</div>
       <div class="form-grp">
         <label class="form-lbl">Description</label>
-        <input class="form-inp" id="spec-desc" type="text" placeholder="e.g. Bay window, skylight, custom shape">
+        <input class="form-inp" id="spec-desc" type="text" placeholder="e.g. Bay window, skylight...">
       </div>
       <div class="form-grp">
         <label class="form-lbl">Price ($)</label>
@@ -707,41 +756,37 @@ function addSpecWin() {
   const id = Date.now() + '_' + Math.random().toString(36).slice(2);
   state.quote.windows.push({ id, type: 'specialty', label: desc, customPrice: price, addon: null });
   document.getElementById('spec-modal').remove();
-  refreshQuoting();
+  refreshCurrent();
   showAddon(id, desc);
 }
 
-// ── Power wash section ──
+// ─── Full-Screen: Power Washing ───────────────────────────────────────────────
 function renderPWSection() {
-  const open = state.openSection === 'powerwash';
   const pw = state.quote.pw;
+  const p  = state.pricing;
   const total = pwTotal(pw);
-  const hasData = Object.values(pw).some(v => v !== '');
 
   return `
-    <div class="card">
-      <div class="sec-hdr" onclick="toggleSec('powerwash')">
-        <div>
-          <div class="sec-title">Power Washing</div>
-          <div class="sec-meta">${hasData ? 'Total: $' + total.toFixed(2) : 'Tap to enter square footage'}</div>
-        </div>
-        <div style="display:flex;align-items:center">
-          ${hasData ? `<span class="sec-badge">$${total.toFixed(0)}</span>` : ''}
-          <span class="sec-chevron ${open ? 'open' : ''}">&#9660;</span>
-        </div>
+    <div class="hdr">
+      <button class="hdr-btn" onclick="go('quoting')">Back</button>
+      <div style="text-align:right">
+        <div class="hdr-title">Power Washing</div>
+        <div class="hdr-sub">Square footage calculator</div>
       </div>
-      ${open ? `
-      <div class="sec-body">
+    </div>
+    <div class="sec-screen">
+
+      <div class="pw-card">
         ${['driveway','patio','brick'].map(key => `
           <div class="pw-row">
             <div style="flex:1">
-              <div class="pw-lbl">${PW_TYPES[key].label}</div>
-              <div class="pw-rate">$${PW_TYPES[key].rate.toFixed(2)} / sq ft</div>
+              <div class="pw-lbl">${PW_LABELS[key]}</div>
+              <div class="pw-rate">$${p[key].toFixed(2)} / sq ft</div>
             </div>
             <input class="pw-inp" type="number" placeholder="sq ft" inputmode="decimal"
               value="${esc(pw[key])}"
               oninput="state.quote.pw.${key}=this.value;updatePWRow(this,'${key}')">
-            <div class="pw-total" id="pw-total-${key}">$${((Number(pw[key])||0)*PW_TYPES[key].rate).toFixed(2)}</div>
+            <div class="pw-total" id="pw-total-${key}">$${((Number(pw[key])||0)*p[key]).toFixed(2)}</div>
           </div>
         `).join('')}
         <div class="pw-row">
@@ -751,59 +796,68 @@ function renderPWSection() {
           </div>
           <input class="pw-inp" type="number" placeholder="$ price" inputmode="decimal"
             value="${esc(pw.specPrice)}"
-            oninput="state.quote.pw.specPrice=this.value;updateTotal()">
-          <div class="pw-total">$${(Number(pw.specPrice)||0).toFixed(2)}</div>
+            oninput="state.quote.pw.specPrice=this.value;updatePWSpecTotal(this)">
+          <div class="pw-total" id="pw-total-spec">$${(Number(pw.specPrice)||0).toFixed(2)}</div>
         </div>
-        ${pw.specPrice ? `
-          <div style="padding-top:8px">
-            <input class="form-inp" type="text" placeholder="Specialty description (optional)"
-              style="font-size:14px;padding:10px 14px"
-              value="${esc(pw.specDesc)}"
-              oninput="state.quote.pw.specDesc=this.value">
-          </div>
-        ` : ''}
       </div>
+
+      ${pw.specPrice ? `
+        <div class="form-grp">
+          <label class="form-lbl">Specialty Description</label>
+          <input class="form-inp" type="text" placeholder="What will be power washed?"
+            value="${esc(pw.specDesc)}"
+            oninput="state.quote.pw.specDesc=this.value">
+        </div>
       ` : ''}
+
+    </div>
+    <div class="sec-bar">
+      <div>
+        <div class="sec-bar-lbl">PW Subtotal</div>
+        <div class="sec-bar-amt" id="pw-sec-total">$${total.toFixed(2)}</div>
+      </div>
+      <button class="done-btn" onclick="go('quoting')">Done</button>
     </div>
   `;
 }
 
 function updatePWRow(input, key) {
-  const val = (Number(input.value) || 0) * PW_TYPES[key].rate;
+  const p = state.pricing;
+  const val = (Number(input.value) || 0) * p[key];
   const el = document.getElementById('pw-total-' + key);
   if (el) el.textContent = '$' + val.toFixed(2);
-  updateTotal();
+  updatePWSectionTotal();
 }
 
-function updateTotal() {
-  const el = document.getElementById('total-amt');
-  if (el) el.textContent = '$' + quoteTotal(state.quote).toFixed(2);
+function updatePWSpecTotal(input) {
+  const el = document.getElementById('pw-total-spec');
+  if (el) el.textContent = '$' + (Number(input.value) || 0).toFixed(2);
+  updatePWSectionTotal();
 }
 
-// ── Gutters section ──
-function renderGutterSection() {
-  const open = state.openSection === 'gutters';
+function updatePWSectionTotal() {
+  const el = document.getElementById('pw-sec-total');
+  if (el) el.textContent = '$' + pwTotal(state.quote.pw).toFixed(2);
+}
+
+// ─── Full-Screen: Gutters ─────────────────────────────────────────────────────
+function renderGutSection() {
   const g = state.quote.gutters;
-
   return `
-    <div class="card">
-      <div class="sec-hdr" onclick="toggleSec('gutters')">
-        <div>
-          <div class="sec-title">Gutters</div>
-          <div class="sec-meta">${g.price ? 'Price: $' + Number(g.price).toFixed(2) : 'Enter custom price'}</div>
-        </div>
-        <div style="display:flex;align-items:center">
-          ${g.price ? `<span class="sec-badge">$${Number(g.price).toFixed(0)}</span>` : ''}
-          <span class="sec-chevron ${open ? 'open' : ''}">&#9660;</span>
-        </div>
+    <div class="hdr">
+      <button class="hdr-btn" onclick="go('quoting')">Back</button>
+      <div style="text-align:right">
+        <div class="hdr-title">Gutters</div>
+        <div class="hdr-sub">Custom pricing</div>
       </div>
-      ${open ? `
-      <div class="sec-body">
+    </div>
+    <div class="sec-screen">
+      <div class="card" style="padding:18px">
         <div class="form-grp">
           <label class="form-lbl">Gutter Cleaning Price</label>
           <input class="form-inp" type="number" placeholder="Enter price" inputmode="decimal"
             value="${esc(g.price)}"
-            oninput="state.quote.gutters.price=this.value;updateTotal()">
+            oninput="state.quote.gutters.price=this.value;updateGutTotal(this)">
         </div>
         <div class="form-grp" style="margin-bottom:0">
           <label class="form-lbl">Notes</label>
@@ -812,30 +866,114 @@ function renderGutterSection() {
             oninput="state.quote.gutters.notes=this.value">
         </div>
       </div>
-      ` : ''}
+    </div>
+    <div class="sec-bar">
+      <div>
+        <div class="sec-bar-lbl">Gutter Price</div>
+        <div class="sec-bar-amt" id="gut-sec-total">$${(Number(g.price)||0).toFixed(2)}</div>
+      </div>
+      <button class="done-btn" onclick="go('quoting')">Done</button>
     </div>
   `;
 }
 
-function completeQuote() {
-  if (quoteTotal(state.quote) === 0) {
-    toast('Add at least one item first');
-    return;
-  }
-  state.quote.completedAt = new Date().toISOString();
-  go('summary');
+function updateGutTotal(input) {
+  const el = document.getElementById('gut-sec-total');
+  if (el) el.textContent = '$' + (Number(input.value) || 0).toFixed(2);
 }
 
-// ─── Summary ─────────────────────────────────────────────────────────────────
+// ─── Settings ─────────────────────────────────────────────────────────────────
+function renderSettings() {
+  const p = state.pricing;
+  return `
+    <div class="hdr">
+      <button class="hdr-btn" onclick="go('dashboard')">Back</button>
+      <div style="text-align:right">
+        <div class="hdr-title">Pricing Settings</div>
+        <div class="hdr-sub">Grosse Pointe Exterior</div>
+      </div>
+    </div>
+    <div class="screen">
+
+      <div class="settings-section">
+        <div class="settings-section-title">Window Pricing</div>
+        ${settingsRow('Regular Window', 'regular', p.regular, '$')}
+        ${settingsRow('Small Window', 'small', p.small, '$')}
+        ${settingsRow('Large / Complicated', 'large', p.large, '$')}
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Add-on Pricing</div>
+        ${settingsRow('Storm Window', 'storm', p.storm, '+')}
+        ${settingsRow('Screen', 'screen', p.screen, '+')}
+        ${settingsRow('Storm & Screen', 'both', p.both, '+')}
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Power Washing Rates (per sq ft)</div>
+        ${settingsRow('Driveway', 'driveway', p.driveway, '$', true)}
+        ${settingsRow('Patio', 'patio', p.patio, '$', true)}
+        ${settingsRow('Brick / Masonry', 'brick', p.brick, '$', true)}
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Quote Settings</div>
+        ${settingsRow('Price Range Buffer', 'range', p.range, '±$')}
+      </div>
+
+      <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+      <button class="btn btn-ghost mt-10" onclick="resetSettings()">Reset to Defaults</button>
+    </div>
+  `;
+}
+
+function settingsRow(label, key, value, prefix, isDecimal) {
+  const step = isDecimal ? '0.01' : '1';
+  return `
+    <div class="settings-row">
+      <div class="settings-row-lbl">${label}</div>
+      <div style="display:flex;align-items:center">
+        <span class="settings-prefix">${prefix}</span>
+        <input class="settings-inp" type="number" id="setting-${key}"
+          value="${value}" step="${step}" min="0" inputmode="decimal">
+      </div>
+    </div>
+  `;
+}
+
+function saveSettings() {
+  const keys = ['regular','small','large','storm','screen','both','driveway','patio','brick','range'];
+  const newPricing = {};
+  for (const key of keys) {
+    const el = document.getElementById('setting-' + key);
+    const val = parseFloat(el.value);
+    if (isNaN(val) || val < 0) { toast('Enter valid prices (0 or above)'); return; }
+    newPricing[key] = val;
+  }
+  state.pricing = newPricing;
+  savePricing(newPricing);
+  toast('Settings saved');
+  setTimeout(() => go('dashboard'), 600);
+}
+
+function resetSettings() {
+  state.pricing = { ...PRICING_DEFAULTS };
+  savePricing(state.pricing);
+  toast('Prices reset to defaults');
+  go('settings');
+}
+
+// ─── Summary ──────────────────────────────────────────────────────────────────
 function renderSummary() {
   const q = state.quote;
-  const total   = quoteTotal(q);
-  const low     = Math.max(0, total - 40);
-  const high    = total + 40;
-  const wTotal  = q.windows.reduce((s, w) => s + winPrice(w), 0);
-  const pwT     = pwTotal(q.pw);
-  const gutT    = Number(q.gutters.price) || 0;
-  const cust    = q.customer.name || 'Unnamed Customer';
+  const p = state.pricing;
+  const total  = quoteTotal(q);
+  const low    = Math.max(0, total - p.range);
+  const high   = total + p.range;
+  const wTotal = q.windows.reduce((s, w) => s + winPrice(w), 0);
+  const pwT    = pwTotal(q.pw);
+  const gutT   = Number(q.gutters.price) || 0;
+  const cust   = q.customer.name || 'Unnamed Customer';
   const missing = !q.customer.name || !q.customer.address;
 
   return `
@@ -848,13 +986,13 @@ function renderSummary() {
     </div>
     <div class="screen">
 
-      ${missing ? `<div class="warn-banner">Customer information is incomplete. It is recommended to fill in name and address before saving.</div>` : ''}
+      ${missing ? `<div class="warn-banner">Customer information is incomplete. Recommended to add name and address before saving.</div>` : ''}
 
       <div class="price-card">
         <div class="price-card-lbl">Recommended Price Range</div>
         <div class="price-card-range">$${low.toFixed(0)} &mdash; $${high.toFixed(0)}</div>
         <div class="price-card-calc">Calculated total: $${total.toFixed(2)}</div>
-        <div class="price-card-note">Range is +/- $40 from calculated total</div>
+        <div class="price-card-note">Range is +/- $${p.range} from calculated total</div>
       </div>
 
       <div class="stat-grid">
@@ -888,8 +1026,8 @@ function renderSummary() {
           ${q.windows.map((w, i) => `
             <div class="sum-row">
               <div class="sum-row-lbl">
-                <div>${esc(w.label || WIN_TYPES[w.type].label)} #${i + 1}</div>
-                ${w.addon ? `<div class="sum-row-sub">+ ${ADDON_TYPES[w.addon].label} (+$${ADDON_TYPES[w.addon].price})</div>` : ''}
+                <div>${esc(w.label || WIN_LABELS[w.type])} #${i + 1}</div>
+                ${w.addon ? `<div class="sum-row-sub">+ ${ADDON_LABELS[w.addon]} (+$${p[w.addon]})</div>` : ''}
               </div>
               <div class="sum-row-amt">$${winPrice(w).toFixed(2)}</div>
             </div>
@@ -907,10 +1045,10 @@ function renderSummary() {
           ${['driveway','patio','brick'].filter(k => Number(q.pw[k]) > 0).map(k => `
             <div class="sum-row">
               <div class="sum-row-lbl">
-                <div>${PW_TYPES[k].label}</div>
-                <div class="sum-row-sub">${q.pw[k]} sq ft &times; $${PW_TYPES[k].rate.toFixed(2)}</div>
+                <div>${PW_LABELS[k]}</div>
+                <div class="sum-row-sub">${q.pw[k]} sq ft &times; $${p[k].toFixed(2)}</div>
               </div>
-              <div class="sum-row-amt">$${((Number(q.pw[k])||0)*PW_TYPES[k].rate).toFixed(2)}</div>
+              <div class="sum-row-amt">$${((Number(q.pw[k])||0)*p[k]).toFixed(2)}</div>
             </div>
           `).join('')}
           ${q.pw.specPrice ? `
@@ -981,49 +1119,33 @@ function initCharts() {
   const pwT = pwTotal(q.pw);
   const gutT = Number(q.gutters.price) || 0;
 
-  // Service breakdown donut
   const bEl = document.getElementById('chart-breakdown');
   if (bEl) {
     const labels = [], data = [];
-    if (wT  > 0) { labels.push('Windows');       data.push(wT);  }
-    if (pwT > 0) { labels.push('Power Washing');  data.push(pwT); }
-    if (gutT> 0) { labels.push('Gutters');        data.push(gutT);}
+    if (wT  > 0) { labels.push('Windows');      data.push(wT);  }
+    if (pwT > 0) { labels.push('Power Washing'); data.push(pwT); }
+    if (gutT> 0) { labels.push('Gutters');       data.push(gutT);}
     new Chart(bEl, {
       type: 'doughnut',
-      data: {
-        labels,
-        datasets: [{ data, backgroundColor: ['#003CFF','#4d72ff','#99aaff'], borderWidth: 0 }],
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } } },
-      },
+      data: { labels, datasets: [{ data, backgroundColor: ['#003CFF','#4d72ff','#99aaff'], borderWidth: 0 }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } } } },
     });
   }
 
-  // Window types bar
   const wEl = document.getElementById('chart-windows');
   if (wEl) {
     const counts = {};
     q.windows.forEach(w => {
-      const lbl = w.label || WIN_TYPES[w.type].label;
+      const lbl = w.label || WIN_LABELS[w.type];
       counts[lbl] = (counts[lbl] || 0) + 1;
     });
-    const labels = Object.keys(counts);
-    const data   = Object.values(counts);
     new Chart(wEl, {
       type: 'bar',
-      data: {
-        labels,
-        datasets: [{ data, backgroundColor: '#003CFF', borderRadius: 6 }],
-      },
+      data: { labels: Object.keys(counts), datasets: [{ data: Object.values(counts), backgroundColor: '#003CFF', borderRadius: 6 }] },
       options: {
         responsive: true, maintainAspectRatio: false,
         plugins: { legend: { display: false } },
-        scales: {
-          y: { beginAtZero: true, ticks: { stepSize: 1 } },
-          x: { grid: { display: false } },
-        },
+        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }, x: { grid: { display: false } } },
       },
     });
   }
@@ -1040,23 +1162,22 @@ function saveQuote() {
 
 function shareQuote() {
   const q = state.quote;
+  const p = state.pricing;
   const total = quoteTotal(q);
-  const low = Math.max(0, total - 40);
-  const high = total + 40;
+  const low = Math.max(0, total - p.range);
+  const high = total + p.range;
 
-  let txt = 'GROSSE POINTE EXTERIOR — QUOTE\n';
-  txt += '================================\n';
+  let txt = 'GROSSE POINTE EXTERIOR — QUOTE\n================================\n';
   if (q.customer.name)    txt += `Customer: ${q.customer.name}\n`;
   if (q.customer.address) txt += `Address:  ${q.customer.address}\n`;
   if (q.customer.phone)   txt += `Phone:    ${q.customer.phone}\n`;
-  txt += `Date:     ${fmtDate(q.createdAt)}\n`;
-  txt += `By:       ${q.createdBy}\n\n`;
+  txt += `Date: ${fmtDate(q.createdAt)} — By: ${q.createdBy}\n\n`;
 
   if (q.windows.length) {
     txt += 'WINDOWS\n';
     q.windows.forEach((w, i) => {
-      txt += `  ${w.label || WIN_TYPES[w.type].label} #${i+1}: $${winPrice(w).toFixed(2)}`;
-      if (w.addon) txt += ` (+ ${ADDON_TYPES[w.addon].label})`;
+      txt += `  ${w.label || WIN_LABELS[w.type]} #${i+1}: $${winPrice(w).toFixed(2)}`;
+      if (w.addon) txt += ` (+ ${ADDON_LABELS[w.addon]})`;
       txt += '\n';
     });
     txt += '\n';
@@ -1066,16 +1187,13 @@ function shareQuote() {
   if (pwT > 0) {
     txt += 'POWER WASHING\n';
     ['driveway','patio','brick'].filter(k => Number(q.pw[k]) > 0).forEach(k => {
-      txt += `  ${PW_TYPES[k].label}: ${q.pw[k]} sq ft = $${((Number(q.pw[k])||0)*PW_TYPES[k].rate).toFixed(2)}\n`;
+      txt += `  ${PW_LABELS[k]}: ${q.pw[k]} sq ft = $${((Number(q.pw[k])||0)*p[k]).toFixed(2)}\n`;
     });
     if (q.pw.specPrice) txt += `  Specialty: $${Number(q.pw.specPrice).toFixed(2)}\n`;
     txt += '\n';
   }
 
-  if (Number(q.gutters.price) > 0) {
-    txt += `GUTTERS: $${Number(q.gutters.price).toFixed(2)}\n\n`;
-  }
-
+  if (Number(q.gutters.price) > 0) txt += `GUTTERS: $${Number(q.gutters.price).toFixed(2)}\n\n`;
   if (q.notes) txt += `Notes: ${q.notes}\n\n`;
   txt += `CALCULATED TOTAL:  $${total.toFixed(2)}\n`;
   txt += `RECOMMENDED RANGE: $${low.toFixed(0)} — $${high.toFixed(0)}\n`;
@@ -1089,7 +1207,7 @@ function shareQuote() {
   }
 }
 
-// ─── History ─────────────────────────────────────────────────────────────────
+// ─── History ──────────────────────────────────────────────────────────────────
 function renderHistory() {
   const list = state.historyList;
   return `
@@ -1105,9 +1223,7 @@ function renderHistory() {
         <div class="empty">
           <div class="empty-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="3"/>
-              <line x1="9" y1="9" x2="15" y2="9"/>
-              <line x1="9" y1="13" x2="13" y2="13"/>
+              <rect x="3" y="3" width="18" height="18" rx="3"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/>
             </svg>
           </div>
           <div class="empty-title">No quotes yet</div>
@@ -1148,14 +1264,10 @@ function deleteQuote(id) {
   document.getElementById('app').innerHTML = renderHistory();
 }
 
-// ─── Utilities ───────────────────────────────────────────────────────────────
+// ─── Utilities ────────────────────────────────────────────────────────────────
 function esc(str) {
   if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 function fmtDate(iso) {
@@ -1163,7 +1275,7 @@ function fmtDate(iso) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
-// ─── Boot ────────────────────────────────────────────────────────────────────
+// ─── Boot ─────────────────────────────────────────────────────────────────────
 render();
 </script>
 </body>
