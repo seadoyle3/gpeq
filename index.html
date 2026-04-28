@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>GPEQ — Grosse Pointe Exterior</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    :root {
+      --blue: #003CFF;
+      --blue-hover: #0030d4;
+      --blue-pale: #e8edff;
+      --text: #111;
+      --muted: #777;
+      --border: #e2e2e2;
+      --bg: #f4f4f6;
+      --white: #fff;
+      --red: #c0392b;
+      --green: #1a7a3c;
+      --radius: 14px;
+      --shadow: 0 2px 10px rgba(0,0,0,0.07);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      max-width: 430px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    .hdr {
+      background: var(--blue);
+      color: #fff;
+      padding: 14px 18px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .hdr-title { font-size: 17px; font-weight: 700; letter-spacing: .3px; }
+    .hdr-sub   { font-size: 10px; opacity: .75; text-transform: uppercase; letter-spacing: .8px; margin-top: 1px; }
+    .hdr-btn   { background: rgba(255,255,255,.18); border: none; color: #fff; font-size: 13px; font-weight: 600; padding: 7px 13px; border-radius: 8px; cursor: pointer; }
+
+    /* ── Screens ── */
+    .screen { padding: 20px; padding-bottom: 110px; }
+
+    /* ── Login ── */
+    .login-top { text-align: center; padding: 44px 20px 28px; }
+    .login-logo { font-size: 30px; font-weight: 900; color: var(--blue); letter-spacing: 3px; }
+    .login-sub  { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; margin-top: 4px; }
+    .login-prompt { font-size: 15px; font-weight: 600; text-align: center; margin-bottom: 18px; }
+    .user-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .user-card {
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .15s, background .15s, transform .1s;
+      font-size: 17px;
+      font-weight: 600;
+    }
+    .user-card:active { transform: scale(.95); border-color: var(--blue); background: var(--blue-pale); }
+    .user-initial {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      border: 2px solid var(--blue);
+      color: var(--blue);
+      font-size: 22px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 10px;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: block; width: 100%;
+      padding: 15px; border-radius: var(--radius);
+      font-size: 16px; font-weight: 600;
+      cursor: pointer; border: none; text-align: center;
+      transition: transform .1s, opacity .1s;
+    }
+    .btn:active { transform: scale(.98); opacity: .9; }
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-outline { background: #fff; color: var(--blue); border: 2px solid var(--blue); }
+    .btn-ghost   { background: #fff; color: var(--muted); border: 2px solid var(--border); }
+    .btn-danger  { background: #fdf0f0; color: var(--red); border: 2px solid #f5c6c2; }
+    .mt-10 { margin-top: 10px; }
+    .mt-14 { margin-top: 14px; }
+    .mt-18 { margin-top: 18px; }
+
+    /* ── Cards ── */
+    .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 14px; }
+
+    /* ── Forms ── */
+    .form-lbl { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 6px; }
+    .form-inp  {
+      width: 100%; padding: 13px 14px;
+      border: 2px solid var(--border); border-radius: 10px;
+      font-size: 16px; outline: none; background: #fff;
+      transition: border-color .15s;
+    }
+    .form-inp:focus { border-color: var(--blue); }
+    .form-grp { margin-bottom: 15px; }
+
+    /* ── Accordion sections ── */
+    .sec-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 17px 18px; cursor: pointer; user-select: none;
+    }
+    .sec-title { font-size: 16px; font-weight: 700; }
+    .sec-meta  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .sec-badge {
+      background: var(--blue); color: #fff;
+      border-radius: 20px; padding: 2px 10px;
+      font-size: 12px; font-weight: 700;
+    }
+    .sec-chevron { font-size: 11px; color: var(--muted); transition: transform .2s; margin-left: 8px; }
+    .sec-chevron.open { transform: rotate(180deg); }
+    .sec-body { padding: 0 18px 18px; }
+
+    /* ── Window buttons ── */
+    .win-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .win-btn {
+      background: #fff; border: 2px solid var(--border);
+      border-radius: 10px; padding: 15px 10px;
+      cursor: pointer; text-align: center;
+      transition: border-color .15s, background .15s, transform .1s;
+      position: relative;
+    }
+    .win-btn:active { transform: scale(.94); border-color: var(--blue); background: var(--blue-pale); }
+    .win-btn-lbl   { font-size: 13px; font-weight: 700; display: block; line-height: 1.3; }
+    .win-btn-price { font-size: 12px; color: var(--muted); display: block; margin-top: 3px; }
+    .win-btn-badge {
+      position: absolute; top: -8px; right: -8px;
+      background: var(--blue); color: #fff;
+      border-radius: 50%; width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700;
+    }
+
+    /* ── Window list ── */
+    .win-list { background: var(--bg); border-radius: 10px; overflow: hidden; }
+    .win-item {
+      display: flex; align-items: center;
+      padding: 10px 13px; border-bottom: 1px solid var(--border);
+      cursor: pointer; transition: background .1s;
+    }
+    .win-item:last-child { border-bottom: none; }
+    .win-item:active { background: var(--blue-pale); }
+    .win-item-info { flex: 1; }
+    .win-item-type  { font-size: 13px; font-weight: 600; }
+    .win-item-addon { font-size: 11px; color: var(--blue); margin-top: 2px; }
+    .win-item-addon.none { color: var(--muted); }
+    .win-item-price { font-size: 13px; font-weight: 700; color: var(--blue); margin-right: 10px; }
+    .win-item-del   { background: none; border: none; color: var(--muted); font-size: 17px; cursor: pointer; padding: 4px 2px; line-height: 1; }
+
+    /* ── Power wash ── */
+    .pw-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 13px 0; border-bottom: 1px solid var(--border);
+    }
+    .pw-row:last-child { border-bottom: none; }
+    .pw-lbl  { font-size: 14px; font-weight: 600; }
+    .pw-rate { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .pw-inp  {
+      width: 88px; padding: 9px 11px;
+      border: 2px solid var(--border); border-radius: 8px;
+      font-size: 15px; text-align: right; outline: none;
+      transition: border-color .15s;
+    }
+    .pw-inp:focus { border-color: var(--blue); }
+    .pw-total { width: 62px; text-align: right; font-size: 13px; font-weight: 700; color: var(--blue); }
+
+    /* ── Running total bar ── */
+    .total-bar {
+      position: fixed; bottom: 0;
+      left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 430px;
+      background: #fff; border-top: 1px solid var(--border);
+      padding: 11px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 90;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.07);
+    }
+    .total-lbl    { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+    .total-amount { font-size: 24px; font-weight: 800; color: var(--blue); }
+    .complete-btn {
+      background: var(--blue); color: #fff; border: none;
+      border-radius: 10px; padding: 13px 22px;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      transition: transform .1s;
+    }
+    .complete-btn:active { transform: scale(.97); }
+
+    /* ── Addon popup ── */
+    .addon-popup {
+      position: fixed;
+      bottom: -130px;
+      left: 50%; transform: translateX(-50%);
+      width: calc(100% - 28px); max-width: 402px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 -2px 30px rgba(0,0,0,.14);
+      padding: 15px 15px 18px;
+      z-index: 200;
+      transition: bottom .22s cubic-bezier(.34,1.56,.64,1);
+    }
+    .addon-popup.show { bottom: 84px; }
+    .addon-popup-lbl { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 10px; }
+    .addon-btns { display: flex; gap: 8px; }
+    .addon-btn {
+      flex: 1; background: var(--blue-pale); color: var(--blue);
+      border: 2px solid var(--blue); border-radius: 9px;
+      padding: 10px 5px; font-size: 13px; font-weight: 700;
+      cursor: pointer; text-align: center; transition: all .1s;
+      line-height: 1.3;
+    }
+    .addon-btn:active { background: var(--blue); color: #fff; }
+    .addon-btn.skip   { background: #fff; color: var(--muted); border-color: var(--border); }
+    .addon-sub { font-size: 10px; font-weight: 500; display: block; margin-top: 2px; }
+
+    /* ── Summary / price range ── */
+    .price-card {
+      background: var(--blue); color: #fff;
+      border-radius: var(--radius); padding: 24px 20px;
+      text-align: center; margin-bottom: 16px;
+    }
+    .price-card-lbl    { font-size: 11px; opacity: .8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .price-card-range  { font-size: 34px; font-weight: 900; letter-spacing: -.5px; }
+    .price-card-calc   { font-size: 14px; opacity: .85; margin-top: 6px; }
+    .price-card-note   { font-size: 11px; opacity: .65; margin-top: 3px; }
+
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .stat-card { background: #fff; border-radius: 10px; padding: 14px; text-align: center; box-shadow: var(--shadow); }
+    .stat-val  { font-size: 28px; font-weight: 900; color: var(--blue); }
+    .stat-lbl  { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-top: 2px; }
+
+    .chart-wrap { position: relative; height: 210px; margin-bottom: 4px; }
+
+    .sum-lbl   { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-bottom: 10px; }
+    .sum-row   { display: flex; justify-content: space-between; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+    .sum-row:last-child { border-bottom: none; }
+    .sum-row-lbl { flex: 1; }
+    .sum-row-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .sum-row-amt { font-weight: 700; color: var(--blue); }
+    .sum-total-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; }
+
+    .warn-banner {
+      background: #fff8e1; border: 1.5px solid #f0c040;
+      border-radius: 10px; padding: 12px 14px;
+      font-size: 13px; color: #7a5a00; margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    /* ── History ── */
+    .hist-card {
+      background: #fff; border-radius: var(--radius); padding: 15px;
+      margin-bottom: 12px; box-shadow: var(--shadow); cursor: pointer;
+    }
+    .hist-top  { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+    .hist-name { font-size: 16px; font-weight: 700; }
+    .hist-amt  { font-size: 18px; font-weight: 800; color: var(--blue); }
+    .hist-meta { font-size: 12px; color: var(--muted); }
+    .hist-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 9px; }
+    .hist-badge {
+      background: var(--blue-pale); color: var(--blue);
+      border-radius: 7px; padding: 3px 10px;
+      font-size: 11px; font-weight: 700;
+    }
+    .del-btn {
+      background: #fdf0f0; color: var(--red);
+      border: 1.5px solid #f5c6c2; border-radius: 7px;
+      padding: 5px 12px; font-size: 12px; font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ── Modal sheet ── */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 500; display: flex; align-items: flex-end; }
+    .modal-sheet   {
+      background: #fff; border-radius: 20px 20px 0 0;
+      padding: 24px 20px 44px; width: 100%; max-width: 430px; margin: 0 auto;
+    }
+    .modal-title   { font-size: 18px; font-weight: 700; margin-bottom: 18px; }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed; top: 76px;
+      left: 50%; transform: translateX(-50%) translateY(-8px);
+      background: #1a1a1a; color: #fff;
+      padding: 9px 20px; border-radius: 20px;
+      font-size: 13px; font-weight: 500; z-index: 400;
+      opacity: 0; pointer-events: none;
+      transition: opacity .18s, transform .18s;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── Empty state ── */
+    .empty { text-align: center; padding: 56px 20px; color: var(--muted); }
+    .empty-icon { width: 54px; height: 54px; border: 2px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+    .empty-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+
+    /* ── Dashboard header row ── */
+    .dash-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 5px; }
+    .dash-name { font-size: 22px; font-weight: 800; }
+    .dash-sub  { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+
+    .section-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-bottom: 11px; margin-top: 22px; }
+    hr.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+  </style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<!-- Addon popup — lives outside #app so re-renders don't destroy it -->
+<div id="addon-popup" class="addon-popup">
+  <div class="addon-popup-lbl" id="addon-popup-lbl">Add upgrade to window</div>
+  <div class="addon-btns">
+    <button class="addon-btn" onclick="applyAddon('storm')">Storm<span class="addon-sub">+$3</span></button>
+    <button class="addon-btn" onclick="applyAddon('screen')">Screen<span class="addon-sub">+$2</span></button>
+    <button class="addon-btn" onclick="applyAddon('both')">Storm &amp; Screen<span class="addon-sub">+$4</span></button>
+    <button class="addon-btn skip" onclick="hideAddon()">Skip</button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// ─── Constants ─────────────────────────────────────────────────────────────
+const USERS = ['Seamus', 'George', 'Mikey', 'Jackson'];
+
+const WIN_TYPES = {
+  regular:  { label: 'Regular Window',       price: 7,    custom: false },
+  small:    { label: 'Small Window',          price: 6,    custom: false },
+  large:    { label: 'Large / Complicated',   price: 9,    custom: false },
+  specialty:{ label: 'Specialty',             price: 0,    custom: true  },
+};
+
+const ADDON_TYPES = {
+  storm:  { label: 'Storm Window',   price: 3 },
+  screen: { label: 'Screen',         price: 2 },
+  both:   { label: 'Storm & Screen', price: 4 },
+};
+
+const PW_TYPES = {
+  driveway: { label: 'Driveway',      rate: 0.20 },
+  patio:    { label: 'Patio',         rate: 0.25 },
+  brick:    { label: 'Brick/Masonry', rate: 0.30 },
+};
+
+// ─── State ──────────────────────────────────────────────────────────────────
+const state = {
+  view: 'login',
+  user: null,
+  quote: null,
+  openSection: 'windows',
+  historyList: JSON.parse(localStorage.getItem('gpeq_v1') || '[]'),
+  addonTarget: null,
+  addonTimer: null,
+};
+
+function newQuote() {
+  return {
+    id: Date.now() + '_' + Math.random().toString(36).slice(2),
+    createdBy: state.user,
+    createdAt: new Date().toISOString(),
+    customer: { name: '', address: '', phone: '' },
+    windows: [],
+    pw: { driveway: '', patio: '', brick: '', specPrice: '', specDesc: '' },
+    gutters: { price: '', notes: '' },
+    notes: '',
+  };
+}
+
+// ─── Calculations ───────────────────────────────────────────────────────────
+function winPrice(w) {
+  const base = w.type === 'specialty' ? (Number(w.customPrice) || 0) : WIN_TYPES[w.type].price;
+  return base + (w.addon ? ADDON_TYPES[w.addon].price : 0);
+}
+
+function pwTotal(pw) {
+  return (Number(pw.driveway) || 0) * 0.20
+       + (Number(pw.patio)    || 0) * 0.25
+       + (Number(pw.brick)    || 0) * 0.30
+       + (Number(pw.specPrice)|| 0);
+}
+
+function quoteTotal(q) {
+  return q.windows.reduce((s, w) => s + winPrice(w), 0)
+       + pwTotal(q.pw)
+       + (Number(q.gutters.price) || 0);
+}
+
+function saveHistory() {
+  localStorage.setItem('gpeq_v1', JSON.stringify(state.historyList));
+}
+
+// ─── Navigation ─────────────────────────────────────────────────────────────
+function go(view) {
+  state.view = view;
+  render();
+  window.scrollTo(0, 0);
+}
+
+// ─── Addon popup ─────────────────────────────────────────────────────────────
+function showAddon(windowId, label) {
+  state.addonTarget = windowId;
+  document.getElementById('addon-popup-lbl').textContent = 'Add upgrade — ' + label;
+  document.getElementById('addon-popup').classList.add('show');
+  clearTimeout(state.addonTimer);
+  state.addonTimer = setTimeout(hideAddon, 2000);
+}
+
+function hideAddon() {
+  document.getElementById('addon-popup').classList.remove('show');
+  clearTimeout(state.addonTimer);
+  state.addonTarget = null;
+}
+
+function applyAddon(type) {
+  if (!state.addonTarget) return;
+  const w = state.quote.windows.find(w => w.id === state.addonTarget);
+  if (w) { w.addon = type; }
+  hideAddon();
+  refreshQuoting();
+  toast(ADDON_TYPES[type].label + ' added');
+}
+
+// ─── Toast ───────────────────────────────────────────────────────────────────
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 1800);
+}
+
+// ─── Render ──────────────────────────────────────────────────────────────────
+function render() {
+  const app = document.getElementById('app');
+  const views = {
+    login:         renderLogin,
+    dashboard:     renderDashboard,
+    'cust-info':   renderCustInfo,
+    quoting:       renderQuoting,
+    summary:       renderSummary,
+    history:       renderHistory,
+  };
+  app.innerHTML = (views[state.view] || renderLogin)();
+  if (state.view === 'summary') {
+    requestAnimationFrame(() => requestAnimationFrame(initCharts));
+  }
+}
+
+function refreshQuoting() {
+  if (state.view !== 'quoting') return;
+  const scrollY = window.scrollY;
+  document.getElementById('app').innerHTML = renderQuoting();
+  window.scrollTo(0, scrollY);
+}
+
+// ─── Login ───────────────────────────────────────────────────────────────────
+function renderLogin() {
+  return `
+    <div class="login-top">
+      <div class="login-logo">GPE</div>
+      <div class="login-sub">Grosse Pointe Exterior</div>
+    </div>
+    <div class="screen" style="padding-top:0">
+      <p class="login-prompt">Select your name</p>
+      <div class="user-grid">
+        ${USERS.map(u => `
+          <div class="user-card" onclick="selectUser('${u}')">
+            <div class="user-initial">${u[0]}</div>
+            ${u}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function selectUser(name) {
+  state.user = name;
+  go('dashboard');
+}
+
+// ─── Dashboard ───────────────────────────────────────────────────────────────
+function renderDashboard() {
+  const recent = state.historyList.filter(q => q.createdBy === state.user).slice(0, 3);
+  return `
+    <div class="hdr">
+      <div>
+        <div class="hdr-title">GPE Quoting</div>
+        <div class="hdr-sub">grossepointeexterior.com</div>
+      </div>
+      <button class="hdr-btn" onclick="go('login')">Switch</button>
+    </div>
+    <div class="screen">
+      <div class="dash-row"><div class="dash-name">Hello, ${state.user}</div></div>
+      <div class="dash-sub">Grosse Pointe Exterior — Field Quoting</div>
+
+      <button class="btn btn-primary" onclick="startQuote()">Start New Quote</button>
+      <button class="btn btn-outline mt-10" onclick="go('history')">Quote History</button>
+
+      ${recent.length ? `
+        <hr class="divider">
+        <div class="section-lbl" style="margin-top:0">Your Recent Quotes</div>
+        ${recent.map(q => histCard(q, false)).join('')}
+      ` : ''}
+    </div>
+  `;
+}
+
+function startQuote() {
+  state.quote = newQuote();
+  go('cust-info');
+}
+
+// ─── Customer Info ────────────────────────────────────────────────────────────
+function renderCustInfo() {
+  const c = state.quote.customer;
+  return `
+    <div class="hdr">
+      <button class="hdr-btn" onclick="go('dashboard')">Back</button>
+      <div style="text-align:right">
+        <div class="hdr-title">New Quote</div>
+        <div class="hdr-sub">${state.user}</div>
+      </div>
+    </div>
+    <div class="screen">
+      <div class="card" style="padding:18px">
+        <div style="font-size:16px;font-weight:700;margin-bottom:3px">Customer Information</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:18px">Can be filled in later</div>
+
+        <div class="form-grp">
+          <label class="form-lbl">Customer Name</label>
+          <input class="form-inp" type="text" placeholder="Full name" value="${esc(c.name)}"
+            oninput="state.quote.customer.name=this.value">
+        </div>
+        <div class="form-grp">
+          <label class="form-lbl">Address</label>
+          <input class="form-inp" type="text" placeholder="Street address" value="${esc(c.address)}"
+            oninput="state.quote.customer.address=this.value">
+        </div>
+        <div class="form-grp" style="margin-bottom:0">
+          <label class="form-lbl">Phone Number</label>
+          <input class="form-inp" type="tel" placeholder="(555) 000-0000" value="${esc(c.phone)}"
+            oninput="state.quote.customer.phone=this.value">
+        </div>
+      </div>
+      <button class="btn btn-primary mt-14" onclick="go('quoting')">Continue to Quote</button>
+      <button class="btn btn-ghost mt-10" style="font-size:14px" onclick="go('quoting')">Skip for Now</button>
+    </div>
+  `;
+}
+
+// ─── Quoting ─────────────────────────────────────────────────────────────────
+function renderQuoting() {
+  const q = state.quote;
+  const total = quoteTotal(q);
+  const cust = q.customer.name || 'New Quote';
+  return `
+    <div class="hdr">
+      <button class="hdr-btn" onclick="go('cust-info')">Back</button>
+      <div style="text-align:right">
+        <div class="hdr-title">${esc(cust)}</div>
+        <div class="hdr-sub">Building Quote</div>
+      </div>
+    </div>
+    <div style="padding-bottom:80px">
+      ${renderWinSection()}
+      ${renderPWSection()}
+      ${renderGutterSection()}
+      <div style="padding:0 18px 8px">
+        <div class="form-grp" style="margin-bottom:0">
+          <label class="form-lbl">Additional Notes</label>
+          <textarea class="form-inp" rows="3" placeholder="Observations, access notes, etc."
+            style="resize:none" oninput="state.quote.notes=this.value">${esc(q.notes)}</textarea>
+        </div>
+      </div>
+    </div>
+    <div class="total-bar">
+      <div>
+        <div class="total-lbl">Running Total</div>
+        <div class="total-amount" id="total-amt">$${total.toFixed(2)}</div>
+      </div>
+      <button class="complete-btn" onclick="completeQuote()">Complete Quote</button>
+    </div>
+  `;
+}
+
+function toggleSec(name) {
+  state.openSection = state.openSection === name ? null : name;
+  refreshQuoting();
+}
+
+// ── Windows section ──
+function renderWinSection() {
+  const open = state.openSection === 'windows';
+  const q = state.quote;
+  const wTotal = q.windows.reduce((s, w) => s + winPrice(w), 0);
+  const wCount = q.windows.length;
+
+  return `
+    <div class="card">
+      <div class="sec-hdr" onclick="toggleSec('windows')">
+        <div>
+          <div class="sec-title">Exterior Windows</div>
+          <div class="sec-meta">${wCount > 0 ? `${wCount} window${wCount !== 1 ? 's' : ''} — $${wTotal.toFixed(2)}` : 'Tap to add windows'}</div>
+        </div>
+        <div style="display:flex;align-items:center">
+          ${wCount > 0 ? `<span class="sec-badge">${wCount}</span>` : ''}
+          <span class="sec-chevron ${open ? 'open' : ''}">&#9660;</span>
+        </div>
+      </div>
+      ${open ? `
+      <div class="sec-body">
+        <div class="win-grid">
+          ${['regular','small','large','specialty'].map(type => `
+            <button class="win-btn" onclick="${type === 'specialty' ? 'openSpecModal()' : `addWin('${type}')`}">
+              <span class="win-btn-lbl">${WIN_TYPES[type].label}</span>
+              <span class="win-btn-price">${WIN_TYPES[type].custom ? 'Custom' : '$' + WIN_TYPES[type].price + '.00'}</span>
+              ${countWin(type) > 0 ? `<span class="win-btn-badge">${countWin(type)}</span>` : ''}
+            </button>
+          `).join('')}
+        </div>
+        ${q.windows.length > 0 ? `
+          <div class="win-list">
+            ${q.windows.map((w, i) => `
+              <div class="win-item" onclick="editAddon('${w.id}')">
+                <div class="win-item-info">
+                  <div class="win-item-type">${esc(w.label || WIN_TYPES[w.type].label)} #${i + 1}</div>
+                  <div class="win-item-addon ${w.addon ? '' : 'none'}">
+                    ${w.addon ? '+ ' + ADDON_TYPES[w.addon].label + ' (+$' + ADDON_TYPES[w.addon].price + ')' : 'Tap to add upgrade'}
+                  </div>
+                </div>
+                <div class="win-item-price">$${winPrice(w).toFixed(2)}</div>
+                <button class="win-item-del" onclick="event.stopPropagation();removeWin('${w.id}')">&#215;</button>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+      </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+function countWin(type) {
+  return state.quote.windows.filter(w => w.type === type).length;
+}
+
+function addWin(type) {
+  const id = Date.now() + '_' + Math.random().toString(36).slice(2);
+  state.quote.windows.push({ id, type, label: WIN_TYPES[type].label, addon: null });
+  refreshQuoting();
+  showAddon(id, WIN_TYPES[type].label);
+}
+
+function removeWin(id) {
+  state.quote.windows = state.quote.windows.filter(w => w.id !== id);
+  refreshQuoting();
+}
+
+function editAddon(id) {
+  const w = state.quote.windows.find(w => w.id === id);
+  if (w) showAddon(id, w.label || WIN_TYPES[w.type].label);
+}
+
+function openSpecModal() {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'spec-modal';
+  overlay.innerHTML = `
+    <div class="modal-sheet">
+      <div class="modal-title">Specialty Window</div>
+      <div class="form-grp">
+        <label class="form-lbl">Description</label>
+        <input class="form-inp" id="spec-desc" type="text" placeholder="e.g. Bay window, skylight, custom shape">
+      </div>
+      <div class="form-grp">
+        <label class="form-lbl">Price ($)</label>
+        <input class="form-inp" id="spec-price" type="number" placeholder="0.00" inputmode="decimal">
+      </div>
+      <button class="btn btn-primary" onclick="addSpecWin()">Add Window</button>
+      <button class="btn btn-ghost mt-10" onclick="document.getElementById('spec-modal').remove()">Cancel</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  setTimeout(() => document.getElementById('spec-desc').focus(), 50);
+}
+
+function addSpecWin() {
+  const desc  = document.getElementById('spec-desc').value.trim() || 'Specialty Window';
+  const price = parseFloat(document.getElementById('spec-price').value) || 0;
+  const id = Date.now() + '_' + Math.random().toString(36).slice(2);
+  state.quote.windows.push({ id, type: 'specialty', label: desc, customPrice: price, addon: null });
+  document.getElementById('spec-modal').remove();
+  refreshQuoting();
+  showAddon(id, desc);
+}
+
+// ── Power wash section ──
+function renderPWSection() {
+  const open = state.openSection === 'powerwash';
+  const pw = state.quote.pw;
+  const total = pwTotal(pw);
+  const hasData = Object.values(pw).some(v => v !== '');
+
+  return `
+    <div class="card">
+      <div class="sec-hdr" onclick="toggleSec('powerwash')">
+        <div>
+          <div class="sec-title">Power Washing</div>
+          <div class="sec-meta">${hasData ? 'Total: $' + total.toFixed(2) : 'Tap to enter square footage'}</div>
+        </div>
+        <div style="display:flex;align-items:center">
+          ${hasData ? `<span class="sec-badge">$${total.toFixed(0)}</span>` : ''}
+          <span class="sec-chevron ${open ? 'open' : ''}">&#9660;</span>
+        </div>
+      </div>
+      ${open ? `
+      <div class="sec-body">
+        ${['driveway','patio','brick'].map(key => `
+          <div class="pw-row">
+            <div style="flex:1">
+              <div class="pw-lbl">${PW_TYPES[key].label}</div>
+              <div class="pw-rate">$${PW_TYPES[key].rate.toFixed(2)} / sq ft</div>
+            </div>
+            <input class="pw-inp" type="number" placeholder="sq ft" inputmode="decimal"
+              value="${esc(pw[key])}"
+              oninput="state.quote.pw.${key}=this.value;updatePWRow(this,'${key}')">
+            <div class="pw-total" id="pw-total-${key}">$${((Number(pw[key])||0)*PW_TYPES[key].rate).toFixed(2)}</div>
+          </div>
+        `).join('')}
+        <div class="pw-row">
+          <div style="flex:1">
+            <div class="pw-lbl">Specialty</div>
+            <div class="pw-rate">Custom price</div>
+          </div>
+          <input class="pw-inp" type="number" placeholder="$ price" inputmode="decimal"
+            value="${esc(pw.specPrice)}"
+            oninput="state.quote.pw.specPrice=this.value;updateTotal()">
+          <div class="pw-total">$${(Number(pw.specPrice)||0).toFixed(2)}</div>
+        </div>
+        ${pw.specPrice ? `
+          <div style="padding-top:8px">
+            <input class="form-inp" type="text" placeholder="Specialty description (optional)"
+              style="font-size:14px;padding:10px 14px"
+              value="${esc(pw.specDesc)}"
+              oninput="state.quote.pw.specDesc=this.value">
+          </div>
+        ` : ''}
+      </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+function updatePWRow(input, key) {
+  const val = (Number(input.value) || 0) * PW_TYPES[key].rate;
+  const el = document.getElementById('pw-total-' + key);
+  if (el) el.textContent = '$' + val.toFixed(2);
+  updateTotal();
+}
+
+function updateTotal() {
+  const el = document.getElementById('total-amt');
+  if (el) el.textContent = '$' + quoteTotal(state.quote).toFixed(2);
+}
+
+// ── Gutters section ──
+function renderGutterSection() {
+  const open = state.openSection === 'gutters';
+  const g = state.quote.gutters;
+
+  return `
+    <div class="card">
+      <div class="sec-hdr" onclick="toggleSec('gutters')">
+        <div>
+          <div class="sec-title">Gutters</div>
+          <div class="sec-meta">${g.price ? 'Price: $' + Number(g.price).toFixed(2) : 'Enter custom price'}</div>
+        </div>
+        <div style="display:flex;align-items:center">
+          ${g.price ? `<span class="sec-badge">$${Number(g.price).toFixed(0)}</span>` : ''}
+          <span class="sec-chevron ${open ? 'open' : ''}">&#9660;</span>
+        </div>
+      </div>
+      ${open ? `
+      <div class="sec-body">
+        <div class="form-grp">
+          <label class="form-lbl">Gutter Cleaning Price</label>
+          <input class="form-inp" type="number" placeholder="Enter price" inputmode="decimal"
+            value="${esc(g.price)}"
+            oninput="state.quote.gutters.price=this.value;updateTotal()">
+        </div>
+        <div class="form-grp" style="margin-bottom:0">
+          <label class="form-lbl">Notes</label>
+          <input class="form-inp" type="text" placeholder="Length, condition, accessibility..."
+            value="${esc(g.notes)}"
+            oninput="state.quote.gutters.notes=this.value">
+        </div>
+      </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+function completeQuote() {
+  if (quoteTotal(state.quote) === 0) {
+    toast('Add at least one item first');
+    return;
+  }
+  state.quote.completedAt = new Date().toISOString();
+  go('summary');
+}
+
+// ─── Summary ─────────────────────────────────────────────────────────────────
+function renderSummary() {
+  const q = state.quote;
+  const total   = quoteTotal(q);
+  const low     = Math.max(0, total - 40);
+  const high    = total + 40;
+  const wTotal  = q.windows.reduce((s, w) => s + winPrice(w), 0);
+  const pwT     = pwTotal(q.pw);
+  const gutT    = Number(q.gutters.price) || 0;
+  const cust    = q.customer.name || 'Unnamed Customer';
+  const missing = !q.customer.name || !q.customer.address;
+
+  return `
+    <div class="hdr">
+      <button class="hdr-btn" onclick="go('quoting')">Edit</button>
+      <div style="text-align:right">
+        <div class="hdr-title">Quote Summary</div>
+        <div class="hdr-sub">${esc(cust)}</div>
+      </div>
+    </div>
+    <div class="screen">
+
+      ${missing ? `<div class="warn-banner">Customer information is incomplete. It is recommended to fill in name and address before saving.</div>` : ''}
+
+      <div class="price-card">
+        <div class="price-card-lbl">Recommended Price Range</div>
+        <div class="price-card-range">$${low.toFixed(0)} &mdash; $${high.toFixed(0)}</div>
+        <div class="price-card-calc">Calculated total: $${total.toFixed(2)}</div>
+        <div class="price-card-note">Range is +/- $40 from calculated total</div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-val">${q.windows.length}</div>
+          <div class="stat-lbl">Windows</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">${q.windows.filter(w => w.addon).length}</div>
+          <div class="stat-lbl">With Upgrades</div>
+        </div>
+      </div>
+
+      ${(wTotal > 0 || pwT > 0 || gutT > 0) ? `
+        <div class="card" style="padding:16px">
+          <div class="sum-lbl">Service Breakdown</div>
+          <div class="chart-wrap"><canvas id="chart-breakdown"></canvas></div>
+        </div>
+      ` : ''}
+
+      ${q.windows.length > 1 ? `
+        <div class="card" style="padding:16px">
+          <div class="sum-lbl">Window Types</div>
+          <div class="chart-wrap"><canvas id="chart-windows"></canvas></div>
+        </div>
+      ` : ''}
+
+      ${wTotal > 0 ? `
+        <div class="card" style="padding:16px">
+          <div class="sum-lbl">Exterior Windows</div>
+          ${q.windows.map((w, i) => `
+            <div class="sum-row">
+              <div class="sum-row-lbl">
+                <div>${esc(w.label || WIN_TYPES[w.type].label)} #${i + 1}</div>
+                ${w.addon ? `<div class="sum-row-sub">+ ${ADDON_TYPES[w.addon].label} (+$${ADDON_TYPES[w.addon].price})</div>` : ''}
+              </div>
+              <div class="sum-row-amt">$${winPrice(w).toFixed(2)}</div>
+            </div>
+          `).join('')}
+          <div class="sum-row" style="font-weight:800">
+            <div class="sum-row-lbl">Subtotal</div>
+            <div class="sum-row-amt">$${wTotal.toFixed(2)}</div>
+          </div>
+        </div>
+      ` : ''}
+
+      ${pwT > 0 ? `
+        <div class="card" style="padding:16px">
+          <div class="sum-lbl">Power Washing</div>
+          ${['driveway','patio','brick'].filter(k => Number(q.pw[k]) > 0).map(k => `
+            <div class="sum-row">
+              <div class="sum-row-lbl">
+                <div>${PW_TYPES[k].label}</div>
+                <div class="sum-row-sub">${q.pw[k]} sq ft &times; $${PW_TYPES[k].rate.toFixed(2)}</div>
+              </div>
+              <div class="sum-row-amt">$${((Number(q.pw[k])||0)*PW_TYPES[k].rate).toFixed(2)}</div>
+            </div>
+          `).join('')}
+          ${q.pw.specPrice ? `
+            <div class="sum-row">
+              <div class="sum-row-lbl">
+                <div>Specialty</div>
+                ${q.pw.specDesc ? `<div class="sum-row-sub">${esc(q.pw.specDesc)}</div>` : ''}
+              </div>
+              <div class="sum-row-amt">$${Number(q.pw.specPrice).toFixed(2)}</div>
+            </div>
+          ` : ''}
+          <div class="sum-row" style="font-weight:800">
+            <div class="sum-row-lbl">Subtotal</div>
+            <div class="sum-row-amt">$${pwT.toFixed(2)}</div>
+          </div>
+        </div>
+      ` : ''}
+
+      ${gutT > 0 ? `
+        <div class="card" style="padding:16px">
+          <div class="sum-lbl">Gutters</div>
+          <div class="sum-row">
+            <div class="sum-row-lbl">
+              <div>Gutter Cleaning</div>
+              ${q.gutters.notes ? `<div class="sum-row-sub">${esc(q.gutters.notes)}</div>` : ''}
+            </div>
+            <div class="sum-row-amt">$${gutT.toFixed(2)}</div>
+          </div>
+        </div>
+      ` : ''}
+
+      ${(q.customer.name || q.customer.address || q.customer.phone) ? `
+        <div class="card" style="padding:16px">
+          <div class="sum-lbl">Customer</div>
+          ${q.customer.name    ? `<div class="sum-row"><div class="sum-row-lbl">Name</div><div>${esc(q.customer.name)}</div></div>` : ''}
+          ${q.customer.address ? `<div class="sum-row"><div class="sum-row-lbl">Address</div><div>${esc(q.customer.address)}</div></div>` : ''}
+          ${q.customer.phone   ? `<div class="sum-row"><div class="sum-row-lbl">Phone</div><div>${esc(q.customer.phone)}</div></div>` : ''}
+        </div>
+      ` : ''}
+
+      ${q.notes ? `
+        <div class="card" style="padding:16px">
+          <div class="sum-lbl">Notes</div>
+          <div style="font-size:14px;line-height:1.5">${esc(q.notes)}</div>
+        </div>
+      ` : ''}
+
+      <div class="card" style="padding:16px;border:2px solid var(--blue)">
+        <div class="sum-total-row">
+          <div style="font-size:18px;font-weight:800">Total</div>
+          <div style="font-size:30px;font-weight:900;color:var(--blue)">$${total.toFixed(2)}</div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">
+          Quoted by ${esc(q.createdBy)} &middot; ${fmtDate(q.createdAt)}
+        </div>
+      </div>
+
+      <button class="btn btn-primary mt-14" onclick="saveQuote()">Save Quote</button>
+      <button class="btn btn-outline mt-10" onclick="shareQuote()">Share / Export</button>
+      <button class="btn btn-ghost mt-10" onclick="go('quoting')">Edit Quote</button>
+    </div>
+  `;
+}
+
+function initCharts() {
+  const q = state.quote;
+  const wT  = q.windows.reduce((s, w) => s + winPrice(w), 0);
+  const pwT = pwTotal(q.pw);
+  const gutT = Number(q.gutters.price) || 0;
+
+  // Service breakdown donut
+  const bEl = document.getElementById('chart-breakdown');
+  if (bEl) {
+    const labels = [], data = [];
+    if (wT  > 0) { labels.push('Windows');       data.push(wT);  }
+    if (pwT > 0) { labels.push('Power Washing');  data.push(pwT); }
+    if (gutT> 0) { labels.push('Gutters');        data.push(gutT);}
+    new Chart(bEl, {
+      type: 'doughnut',
+      data: {
+        labels,
+        datasets: [{ data, backgroundColor: ['#003CFF','#4d72ff','#99aaff'], borderWidth: 0 }],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 12 } } } },
+      },
+    });
+  }
+
+  // Window types bar
+  const wEl = document.getElementById('chart-windows');
+  if (wEl) {
+    const counts = {};
+    q.windows.forEach(w => {
+      const lbl = w.label || WIN_TYPES[w.type].label;
+      counts[lbl] = (counts[lbl] || 0) + 1;
+    });
+    const labels = Object.keys(counts);
+    const data   = Object.values(counts);
+    new Chart(wEl, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{ data, backgroundColor: '#003CFF', borderRadius: 6 }],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, ticks: { stepSize: 1 } },
+          x: { grid: { display: false } },
+        },
+      },
+    });
+  }
+}
+
+function saveQuote() {
+  const q = state.quote;
+  state.historyList = state.historyList.filter(h => h.id !== q.id);
+  state.historyList.unshift(q);
+  saveHistory();
+  toast('Quote saved');
+  setTimeout(() => go('dashboard'), 700);
+}
+
+function shareQuote() {
+  const q = state.quote;
+  const total = quoteTotal(q);
+  const low = Math.max(0, total - 40);
+  const high = total + 40;
+
+  let txt = 'GROSSE POINTE EXTERIOR — QUOTE\n';
+  txt += '================================\n';
+  if (q.customer.name)    txt += `Customer: ${q.customer.name}\n`;
+  if (q.customer.address) txt += `Address:  ${q.customer.address}\n`;
+  if (q.customer.phone)   txt += `Phone:    ${q.customer.phone}\n`;
+  txt += `Date:     ${fmtDate(q.createdAt)}\n`;
+  txt += `By:       ${q.createdBy}\n\n`;
+
+  if (q.windows.length) {
+    txt += 'WINDOWS\n';
+    q.windows.forEach((w, i) => {
+      txt += `  ${w.label || WIN_TYPES[w.type].label} #${i+1}: $${winPrice(w).toFixed(2)}`;
+      if (w.addon) txt += ` (+ ${ADDON_TYPES[w.addon].label})`;
+      txt += '\n';
+    });
+    txt += '\n';
+  }
+
+  const pwT = pwTotal(q.pw);
+  if (pwT > 0) {
+    txt += 'POWER WASHING\n';
+    ['driveway','patio','brick'].filter(k => Number(q.pw[k]) > 0).forEach(k => {
+      txt += `  ${PW_TYPES[k].label}: ${q.pw[k]} sq ft = $${((Number(q.pw[k])||0)*PW_TYPES[k].rate).toFixed(2)}\n`;
+    });
+    if (q.pw.specPrice) txt += `  Specialty: $${Number(q.pw.specPrice).toFixed(2)}\n`;
+    txt += '\n';
+  }
+
+  if (Number(q.gutters.price) > 0) {
+    txt += `GUTTERS: $${Number(q.gutters.price).toFixed(2)}\n\n`;
+  }
+
+  if (q.notes) txt += `Notes: ${q.notes}\n\n`;
+  txt += `CALCULATED TOTAL:  $${total.toFixed(2)}\n`;
+  txt += `RECOMMENDED RANGE: $${low.toFixed(0)} — $${high.toFixed(0)}\n`;
+
+  if (navigator.share) {
+    navigator.share({ title: 'GPE Quote', text: txt }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(txt)
+      .then(() => toast('Quote copied to clipboard'))
+      .catch(() => toast('Copy failed — try again'));
+  }
+}
+
+// ─── History ─────────────────────────────────────────────────────────────────
+function renderHistory() {
+  const list = state.historyList;
+  return `
+    <div class="hdr">
+      <button class="hdr-btn" onclick="go('dashboard')">Back</button>
+      <div style="text-align:right">
+        <div class="hdr-title">Quote History</div>
+        <div class="hdr-sub">${list.length} quote${list.length !== 1 ? 's' : ''}</div>
+      </div>
+    </div>
+    <div class="screen">
+      ${list.length === 0 ? `
+        <div class="empty">
+          <div class="empty-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="3"/>
+              <line x1="9" y1="9" x2="15" y2="9"/>
+              <line x1="9" y1="13" x2="13" y2="13"/>
+            </svg>
+          </div>
+          <div class="empty-title">No quotes yet</div>
+          <div>Saved quotes will appear here</div>
+        </div>
+      ` : list.map(q => histCard(q, true)).join('')}
+    </div>
+  `;
+}
+
+function histCard(q, showDel) {
+  const total = quoteTotal(q);
+  return `
+    <div class="hist-card" onclick="viewQuote('${q.id}')">
+      <div class="hist-top">
+        <div class="hist-name">${esc(q.customer.name || 'Unnamed Customer')}</div>
+        <div class="hist-amt">$${total.toFixed(2)}</div>
+      </div>
+      <div class="hist-meta">${q.customer.address ? esc(q.customer.address) + ' &middot; ' : ''}${fmtDate(q.createdAt)}</div>
+      <div class="hist-foot">
+        <span class="hist-badge">${esc(q.createdBy)}</span>
+        ${showDel ? `<button class="del-btn" onclick="event.stopPropagation();deleteQuote('${q.id}')">Delete</button>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function viewQuote(id) {
+  const q = state.historyList.find(h => h.id === id);
+  if (!q) return;
+  state.quote = JSON.parse(JSON.stringify(q));
+  go('summary');
+}
+
+function deleteQuote(id) {
+  state.historyList = state.historyList.filter(h => h.id !== id);
+  saveHistory();
+  document.getElementById('app').innerHTML = renderHistory();
+}
+
+// ─── Utilities ───────────────────────────────────────────────────────────────
+function esc(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function fmtDate(iso) {
+  if (!iso) return '';
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+// ─── Boot ────────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
