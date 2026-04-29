@@ -17,6 +17,9 @@
       --bg: #f4f4f6;
       --white: #fff;
       --red: #c0392b;
+      --green: #22c55e;
+      --green-dark: #16a34a;
+      --green-pale: #dcfce7;
       --radius: 14px;
       --shadow: 0 2px 10px rgba(0,0,0,0.07);
     }
@@ -37,6 +40,7 @@
       display: flex; align-items: center; justify-content: space-between;
       position: sticky; top: 0; z-index: 100;
     }
+    .hdr-logo  { width: 38px; height: 38px; border-radius: 8px; display: block; }
     .hdr-title { font-size: 17px; font-weight: 700; }
     .hdr-sub   { font-size: 10px; opacity: .75; text-transform: uppercase; letter-spacing: .8px; margin-top: 1px; }
     .hdr-btn   { background: rgba(255,255,255,.18); border: none; color: #fff; font-size: 13px; font-weight: 600; padding: 7px 13px; border-radius: 8px; cursor: pointer; white-space: nowrap; }
@@ -46,10 +50,28 @@
     .screen { padding: 20px; padding-bottom: 110px; }
 
     /* ── Login ── */
-    .login-top { text-align: center; padding: 44px 20px 28px; }
-    .login-logo { font-size: 30px; font-weight: 900; color: var(--blue); letter-spacing: 3px; }
-    .login-sub  { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; margin-top: 4px; }
-    .login-prompt { font-size: 15px; font-weight: 600; text-align: center; margin-bottom: 18px; }
+    @keyframes logoEntrance {
+      from { opacity: 0; transform: scale(0.7) translateY(12px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .login-top     { text-align: center; padding: 48px 20px 28px; }
+    .login-logo-img {
+      width: 130px; height: 130px; border-radius: 22px; display: block; margin: 0 auto;
+      animation: logoEntrance 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    .login-sub  {
+      font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; margin-top: 12px;
+      animation: fadeUp 0.4s ease-out 0.3s both;
+    }
+    .login-prompt {
+      font-size: 15px; font-weight: 600; text-align: center; margin-bottom: 18px;
+      animation: fadeUp 0.4s ease-out 0.45s both;
+    }
+    .user-grid-anim { animation: fadeUp 0.4s ease-out 0.55s both; }
     .user-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .user-card {
       background: #fff; border: 2px solid var(--border); border-radius: var(--radius);
@@ -190,6 +212,15 @@
     }
     .complete-btn:active { opacity: .85; }
 
+    /* ── Addon green animation ── */
+    @keyframes addonFlash {
+      0%   { transform: scale(1); }
+      45%  { transform: scale(1.1); background: var(--green); color: #fff; border-color: var(--green); }
+      100% { transform: scale(1);  background: var(--green-pale); color: var(--green-dark); border-color: var(--green); }
+    }
+    .addon-btn.addon-flash    { animation: addonFlash 0.38s ease-out forwards; }
+    .addon-btn.addon-selected { background: var(--green-pale) !important; color: var(--green-dark) !important; border-color: var(--green) !important; }
+
     /* ── Addon popup (BIGGER) ── */
     .addon-popup {
       position: fixed;
@@ -216,6 +247,21 @@
     .addon-btn:active { background: var(--blue); color: #fff; }
     .addon-btn.skip   { background: #fff; color: var(--muted); border-color: var(--border); }
     .addon-sub { font-size: 12px; font-weight: 500; display: block; margin-top: 4px; }
+
+    /* ── Addon summary card ── */
+    .addon-sum-card {
+      background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+      border-left: 5px solid var(--green); padding: 16px; margin-bottom: 14px;
+    }
+    .addon-sum-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--green-dark); margin-bottom: 12px; }
+    .addon-sum-row   { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .addon-sum-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .addon-sum-row.total-row { margin-top: 4px; padding-top: 10px; border-top: 2px solid var(--border); border-bottom: none; }
+    .addon-sum-dot   { width: 10px; height: 10px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+    .addon-sum-lbl   { flex: 1; font-size: 14px; font-weight: 600; }
+    .addon-sum-count { font-size: 13px; color: var(--muted); white-space: nowrap; }
+    .addon-sum-amt   { font-size: 14px; font-weight: 700; color: var(--green-dark); min-width: 52px; text-align: right; }
+    .no-addons-note  { font-size: 13px; color: var(--muted); text-align: center; padding: 8px 0; }
 
     /* ── Summary ── */
     .price-card {
@@ -430,6 +476,16 @@ function showAddon(windowId, label) {
   document.getElementById('addon-storm-price').textContent  = '+$' + p.storm;
   document.getElementById('addon-screen-price').textContent = '+$' + p.screen;
   document.getElementById('addon-both-price').textContent   = '+$' + p.both;
+
+  // Mark currently selected addon as green
+  const w = state.quote.windows.find(w => w.id === windowId);
+  const currentAddon = w ? w.addon : null;
+  const typeOrder = ['storm', 'screen', 'both'];
+  document.querySelectorAll('.addon-btn:not(.skip)').forEach((btn, i) => {
+    btn.classList.remove('addon-selected', 'addon-flash');
+    if (currentAddon === typeOrder[i]) btn.classList.add('addon-selected');
+  });
+
   document.getElementById('addon-popup').classList.add('show');
   clearTimeout(state.addonTimer);
   state.addonTimer = setTimeout(hideAddon, 2000);
@@ -443,11 +499,25 @@ function hideAddon() {
 
 function applyAddon(type) {
   if (!state.addonTarget) return;
-  const w = state.quote.windows.find(w => w.id === state.addonTarget);
-  if (w) w.addon = type;
-  hideAddon();
-  refreshCurrent();
-  toast(ADDON_LABELS[type] + ' added');
+  clearTimeout(state.addonTimer);
+
+  // Flash animation on tapped button
+  const typeIndex = ['storm', 'screen', 'both'].indexOf(type);
+  const btns = document.querySelectorAll('.addon-btn:not(.skip)');
+  if (btns[typeIndex]) {
+    btns.forEach(b => b.classList.remove('addon-selected', 'addon-flash'));
+    btns[typeIndex].classList.add('addon-flash');
+  }
+
+  // Apply addon and close after animation completes
+  const targetId = state.addonTarget;
+  state.addonTarget = null;
+  setTimeout(() => {
+    const w = state.quote.windows.find(w => w.id === targetId);
+    if (w) w.addon = type;
+    document.getElementById('addon-popup').classList.remove('show');
+    refreshCurrent();
+  }, 400);
 }
 
 // ─── Toast ────────────────────────────────────────────────────────────────────
@@ -476,12 +546,12 @@ function render() {
 function renderLogin() {
   return `
     <div class="login-top">
-      <div class="login-logo">GPE</div>
+      <img src="logo.png" alt="GPE" class="login-logo-img">
       <div class="login-sub">Grosse Pointe Exterior</div>
     </div>
     <div class="screen" style="padding-top:0">
       <p class="login-prompt">Select your name</p>
-      <div class="user-grid">
+      <div class="user-grid user-grid-anim">
         ${USERS.map(u => `
           <div class="user-card" onclick="selectUser('${u}')">
             <div class="user-initial">${u[0]}</div>
@@ -499,9 +569,12 @@ function renderDashboard() {
   const recent = state.historyList.filter(q => q.createdBy === state.user).slice(0, 3);
   return `
     <div class="hdr">
-      <div>
-        <div class="hdr-title">GPE Quoting</div>
-        <div class="hdr-sub">grossepointeexterior.com</div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <img src="logo.png" alt="GPE" class="hdr-logo">
+        <div>
+          <div class="hdr-title">GPE Quoting</div>
+          <div class="hdr-sub">grossepointeexterior.com</div>
+        </div>
       </div>
       <div style="display:flex;gap:8px">
         <button class="hdr-btn" onclick="go('settings')">Settings</button>
@@ -681,7 +754,7 @@ function renderWinSection() {
             <div class="win-item" onclick="editAddon('${w.id}')">
               <div class="win-item-info">
                 <div class="win-item-type">${esc(w.label || WIN_LABELS[w.type])} #${i + 1}</div>
-                <div class="win-item-addon ${w.addon ? '' : 'none'}">
+                <div class="win-item-addon ${w.addon ? '' : 'none'}" style="${w.addon ? 'color:var(--green-dark)' : ''}">
                   ${w.addon ? '+ ' + ADDON_LABELS[w.addon] + ' (+$' + state.pricing[w.addon] + ')' : 'Tap to add upgrade'}
                 </div>
               </div>
@@ -1006,6 +1079,8 @@ function renderSummary() {
         </div>
       </div>
 
+      ${renderAddonSummary(q)}
+
       ${(wTotal > 0 || pwT > 0 || gutT > 0) ? `
         <div class="card" style="padding:16px">
           <div class="sum-lbl">Service Breakdown</div>
@@ -1109,6 +1184,46 @@ function renderSummary() {
       <button class="btn btn-primary mt-14" onclick="saveQuote()">Save Quote</button>
       <button class="btn btn-outline mt-10" onclick="shareQuote()">Share / Export</button>
       <button class="btn btn-ghost mt-10" onclick="go('quoting')">Edit Quote</button>
+    </div>
+  `;
+}
+
+function renderAddonSummary(q) {
+  const p = state.pricing;
+  const stormCount  = q.windows.filter(w => w.addon === 'storm').length;
+  const screenCount = q.windows.filter(w => w.addon === 'screen').length;
+  const bothCount   = q.windows.filter(w => w.addon === 'both').length;
+  const totalCount  = stormCount + screenCount + bothCount;
+  const stormAmt    = stormCount  * p.storm;
+  const screenAmt   = screenCount * p.screen;
+  const bothAmt     = bothCount   * p.both;
+  const totalAmt    = stormAmt + screenAmt + bothAmt;
+
+  const rows = [
+    { key: 'storm',  label: 'Storm Windows',   count: stormCount,  rate: p.storm,  amt: stormAmt  },
+    { key: 'screen', label: 'Screens',          count: screenCount, rate: p.screen, amt: screenAmt },
+    { key: 'both',   label: 'Storm & Screen',   count: bothCount,   rate: p.both,   amt: bothAmt   },
+  ].filter(r => r.count > 0);
+
+  return `
+    <div class="addon-sum-card">
+      <div class="addon-sum-title">Add-on Breakdown</div>
+      ${rows.length === 0 ? `<div class="no-addons-note">No add-ons on this quote</div>` : `
+        ${rows.map(r => `
+          <div class="addon-sum-row">
+            <div class="addon-sum-dot"></div>
+            <div class="addon-sum-lbl">${r.label}</div>
+            <div class="addon-sum-count">${r.count} &times; $${r.rate}</div>
+            <div class="addon-sum-amt">$${r.amt.toFixed(2)}</div>
+          </div>
+        `).join('')}
+        <div class="addon-sum-row total-row">
+          <div></div>
+          <div class="addon-sum-lbl" style="font-weight:800">Total Add-ons</div>
+          <div class="addon-sum-count">${totalCount} window${totalCount !== 1 ? 's' : ''}</div>
+          <div class="addon-sum-amt" style="font-size:16px">$${totalAmt.toFixed(2)}</div>
+        </div>
+      `}
     </div>
   `;
 }
