@@ -1,0 +1,16 @@
+{
+  "name": "GPEQ — Grosse Pointe Exterior",
+  "short_name": "GPEQ",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#003CFF",
+  "theme_color": "#003CFF",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
