@@ -563,10 +563,41 @@ function renderLogin() {
             ${u}
           </div>
         `).join('')}
+        <div class="user-card" style="border-style:dashed" onclick="externalLogin()">
+          <div class="user-initial" style="border-style:dashed;color:var(--muted);border-color:var(--muted)">?</div>
+          <span style="color:var(--muted)">External</span>
+        </div>
       </div>
     </div>
   `;
 }
+
+function externalLogin() {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'ext-modal';
+  overlay.innerHTML = `
+    <div class="modal-sheet">
+      <div class="modal-title">External User</div>
+      <div class="form-grp">
+        <label class="form-lbl">Your Name</label>
+        <input class="form-inp" id="ext-name" type="text" placeholder="Enter your name" autocomplete="off">
+      </div>
+      <button class="btn btn-primary" onclick="confirmExternal()">Continue</button>
+      <button class="btn btn-ghost mt-10" onclick="document.getElementById('ext-modal').remove()">Cancel</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  setTimeout(() => document.getElementById('ext-name').focus(), 50);
+}
+
+function confirmExternal() {
+  const name = document.getElementById('ext-name').value.trim();
+  if (!name) { document.getElementById('ext-name').style.borderColor = 'var(--red)'; return; }
+  document.getElementById('ext-modal').remove();
+  selectUser(name);
+}
+
 function selectUser(name) { state.user = name; go('dashboard'); }
 
 // ─── Dashboard ────────────────────────────────────────────────────────────────
